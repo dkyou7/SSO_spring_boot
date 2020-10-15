@@ -21,21 +21,10 @@ public class Client1Controller {
         return "redirect:/protected-resource-1";
     }
 
-    @GetMapping("/protected-resource-1")
-    public String protectedResource() {
-        logger.info("[Client1 서버] protectedResource() =================");
-        return "protected-resource-1";
-    }
-
     @GetMapping("/protected-resource-1/test/{username}")
     public RedirectView protectedResourceTest(@PathVariable("username") String username) {
         logger.info("[Client1 서버] /protected-resource-1/testClient1 =================" + username);
         return new RedirectView("http://localhost:8181/success/"+username);
-    }
-    @GetMapping("/go_client_1")
-    public RedirectView go_client_1() {
-        logger.info("[Client1 서버] go_client_1 =================");
-        return new RedirectView("http://localhost:8181/success");
     }
 
     @GetMapping("/logout")
@@ -43,10 +32,5 @@ public class Client1Controller {
         logger.info("[Client1 서버] logout =================");
         CookieUtil.clear(httpServletResponse, jwtTokenCookieName);
         return "redirect:/";
-    }
-
-    @GetMapping("/test")
-    public String sendRes1(){
-        return "redirect:/http://localhost:8180/";
     }
 }

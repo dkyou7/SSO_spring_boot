@@ -20,21 +20,10 @@ public class Client2Controller {
         return "redirect:/protected-resource-2";
     }
 
-    @GetMapping("/protected-resource-2")
-    public String protectedResource() {
-        logger.info("[Client2 서버] protectedResource() =================");
-        return "protected-resource-2";
-    }
-
     @GetMapping("/protected-resource-2/test/{username}")
     public RedirectView protectedResourceTest(@PathVariable("username") String username) {
         logger.info("[Client2 서버] /protected-resource-2/testClient2 =================" + username);
         return new RedirectView("http://localhost:8183/success/"+username);
-    }
-    @GetMapping("/go_client_2")
-    public RedirectView go_client_2() {
-        logger.info("[Client2 서버] go_client_2 =================");
-        return new RedirectView("http://localhost:8183/success");
     }
 
     @GetMapping("/logout")
