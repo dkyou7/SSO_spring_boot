@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SSO_spring_boot.iml" filepath="$PROJECT_DIR$/.idea/SSO_spring_boot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/auth_server/auth_server.iml" filepath="$PROJECT_DIR$/auth_server/auth_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testClient1/testClient1.iml" filepath="$PROJECT_DIR$/testClient1/testClient1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testClient2/testClient2.iml" filepath="$PROJECT_DIR$/testClient2/testClient2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testRes1/testRes1.iml" filepath="$PROJECT_DIR$/testRes1/testRes1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testRes2/testRes2.iml" filepath="$PROJECT_DIR$/testRes2/testRes2.iml" />
+    </modules>
+  </component>
+</project>

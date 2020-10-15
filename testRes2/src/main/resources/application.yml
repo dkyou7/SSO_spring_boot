@@ -1,8 +1,8 @@
 server:
-  port: 8182
+  port: 8183
 spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
 services:
-  auth: http://localhost:8080/login
+  auth: http://localhost:8083
