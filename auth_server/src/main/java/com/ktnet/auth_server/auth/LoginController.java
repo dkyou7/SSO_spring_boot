@@ -39,7 +39,8 @@ public class LoginController {
         User user = new User();
         user.setRedirectUrl(redirectUrl);
         model.addAttribute("user",user);
-        return "loginTest";
+//        return "loginTest";
+        return "index";
     }
 
     @PostMapping("/login")

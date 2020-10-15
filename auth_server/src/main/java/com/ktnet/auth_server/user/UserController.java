@@ -11,7 +11,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/save")
-    public void init(){
+    public String init(){
         userService.createDummy();
+        return "더미유저 생성 완료!";
     }
 }
