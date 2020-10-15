@@ -39,13 +39,6 @@ public class ResourceController {
         return "success_page";
     }
 
-
-    @GetMapping("/protected-resource-2")
-    public String protectedResource() {
-        logger.info("[testRes2 서버] protected =================");
-        return "protected-resource-2/test";
-    }
-
     @GetMapping("/logout")
     public String logout(HttpServletResponse httpServletResponse) {
         CookieUtil.clear(httpServletResponse, jwtTokenCookieName);
