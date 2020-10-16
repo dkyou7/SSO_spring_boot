@@ -28,14 +28,15 @@ public class ResourceController {
         JSONObject jObject = new JSONObject(s);
         username = jObject.getString("sub");
         model.addAttribute("username", username);
-        return "success_page";
+//        return "success_page";
+        return "index";
     }
 
     @GetMapping("/success/{username}")
     public String success(@PathVariable("username")String username, Model model) {
         logger.info("[testRes1 서버] success =================" + username);
         model.addAttribute("username",username);
-        return "success_page";
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
