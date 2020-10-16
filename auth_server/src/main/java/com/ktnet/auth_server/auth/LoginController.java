@@ -51,7 +51,7 @@ public class LoginController {
         if(userByEmail == null || !userByEmail.getPassword().equals(password)){
 //        if (username == null || !credentials.containsKey(username) || !credentials.get(username).equals(password)){
             model.addAttribute("error", "Invalid username or password!");
-            return "loginTest";
+            return "index";
         }
         System.out.println("request.getRequestURL() = " + user.getRedirectUrl());
 

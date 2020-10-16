@@ -83,4 +83,7 @@ public class Member {
     public String getNM() {
         return NM;
     }
+    public String getPRTNUM() {
+        return PRTNUM;
+    }
 }
