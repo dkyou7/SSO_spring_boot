@@ -23,7 +23,7 @@ public class Res2Application {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new JwtFilter());
         registrationBean.setInitParameters(Collections.singletonMap("services.auth", authService));
-        registrationBean.addUrlPatterns("/test");
+        registrationBean.addUrlPatterns("/go_auth");
 
         return registrationBean;
     }

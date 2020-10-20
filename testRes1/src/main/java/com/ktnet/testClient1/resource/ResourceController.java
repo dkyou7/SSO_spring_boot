@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,17 @@ import javax.servlet.http.HttpServletResponse;
 public class ResourceController {
     private static final String jwtTokenCookieName = "JWT-TOKEN";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @GetMapping("/login")
+    public String home() {
+        logger.info("[Res1 서버] home() ================= 1. 이제 여기서 인증서버에서 낚아채갑니다. jwt filter 에 등록되어있기 때문에");
+        return "redirect:/go_auth";
+    }
+    @GetMapping("/go_auth/test/{username}")
+    public RedirectView protectedResourceTest(@PathVariable("username") String username) {
+        logger.info("[res1 서버] /go_auth/res1 =================" + username);
+        return new RedirectView("/success/"+username);
+    }
 
     @GetMapping("/")
     public String home(HttpServletRequest request,Model model) {
