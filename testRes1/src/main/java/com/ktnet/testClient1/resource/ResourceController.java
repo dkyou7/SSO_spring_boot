@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 
 @Controller
 public class ResourceController {
@@ -23,10 +25,10 @@ public class ResourceController {
         logger.info("[Res1 서버] home() ================= 1. 이제 여기서 인증서버에서 낚아채갑니다. jwt filter 에 등록되어있기 때문에");
         return "redirect:/go_auth";
     }
-    @GetMapping("/go_auth/test/{username}")
-    public RedirectView protectedResourceTest(@PathVariable("username") String username) {
-        logger.info("[res1 서버] /go_auth/res1 =================" + username);
-        return new RedirectView("/success/"+username);
+    @GetMapping("/go_auth/test/{token}")
+    public RedirectView protectedResourceTest(@PathVariable("token") String token) {
+        logger.info("[res1 서버] /go_auth/res1 =================" + token);
+        return new RedirectView("/success/"+token);
     }
 
     @GetMapping("/")
@@ -40,14 +42,14 @@ public class ResourceController {
         JSONObject jObject = new JSONObject(s);
         username = jObject.getString("sub");
         model.addAttribute("username", username);
-//        return "success_page";
         return "index";
     }
 
-    @GetMapping("/success/{username}")
-    public String success(@PathVariable("username")String username, Model model) {
+    @GetMapping("/success/{token}")
+    public String success(HttpServletResponse httpServletResponse, @PathVariable("token")String username, Model model) {
         logger.info("[testRes1 서버] success =================" + username);
         model.addAttribute("username",username);
+        CookieUtil.create(httpServletResponse, jwtTokenCookieName, username, false, -1, "localhost");
         return "redirect:/";
     }
 

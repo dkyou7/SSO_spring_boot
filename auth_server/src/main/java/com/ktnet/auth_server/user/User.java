@@ -18,11 +18,15 @@ public class User implements Serializable {
 
     private String email;
     private String password;
-
+    private String clientId;
     private String redirectUrl;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+    public void mergeUser(User info){
+        this.clientId = info.getClientId();
+        this.redirectUrl = info.getRedirectUrl();
     }
 }

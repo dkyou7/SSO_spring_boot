@@ -18,11 +18,11 @@ public class UserService {
 
     @Transactional
     public void createDummy() {
-        User user1 = new User("test1","123");
-        User user2 = new User("test2","123");
-        User user3 = new User("test3","123");
-        User user4 = new User("hellokoding","hellokoding");
-        User user5 = new User("hellosso","hellosso");
+        User user1 = new User("test1@naver.com","123");
+        User user2 = new User("test2@naver.com","123");
+        User user3 = new User("test3@naver.com","123");
+        User user4 = new User("hellokoding@naver.com","hellokoding");
+        User user5 = new User("hellosso@naver.com","hellosso");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
