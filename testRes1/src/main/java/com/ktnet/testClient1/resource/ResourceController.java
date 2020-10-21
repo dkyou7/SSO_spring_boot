@@ -35,6 +35,11 @@ public class ResourceController {
     public String home(HttpServletRequest request,Model model) {
         logger.info("[testRes1 서버] 1. 처음 접속하는 화면입니다. ================= 로그인 하기를 클릭하시면 됩니다.");
         if(CookieUtil.getValue(request,jwtTokenCookieName)== null){
+            /**
+             * todo
+             * 쿠키에 아무 정보도 없다면.. 다른 도메인에서 접속 정보가 존재할 수도 있으니까 인증서버 세션이 존재하는지 파악해 보자.
+             * 근데 이건 다시 세션을 파야되는데 어떻게 해야하는건가? 잘 모르겠다.
+             */
             return "index";
         }
         String username = CookieUtil.getValue(request, jwtTokenCookieName);
@@ -46,10 +51,9 @@ public class ResourceController {
     }
 
     @GetMapping("/success/{token}")
-    public String success(HttpServletResponse httpServletResponse, @PathVariable("token")String username, Model model) {
-        logger.info("[testRes1 서버] success =================" + username);
-        model.addAttribute("username",username);
-        CookieUtil.create(httpServletResponse, jwtTokenCookieName, username, false, -1, "localhost");
+    public String success(HttpServletResponse httpServletResponse, @PathVariable("token")String token, Model model) {
+        logger.info("[testRes1 서버] success =================" + token);
+        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
         return "redirect:/";
     }
 
