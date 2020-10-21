@@ -17,8 +17,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = JwtUtil.getSubject(httpServletRequest, jwtTokenCookieName, signingKey);
         if(username == null){
             String authService = this.getFilterConfig().getInitParameter("services.auth");
-            System.out.println(httpServletRequest.getRequestURL());
-            httpServletResponse.sendRedirect(authService + "?redirect=" + httpServletRequest.getRequestURL());
+            String clientId = this.getFilterConfig().getInitParameter("oauth.client_id");
+            httpServletResponse.sendRedirect(authService + "?redirect_uri=" + httpServletRequest.getRequestURL()+"&client_id="+clientId+"&response_type=code");
         } else{
             httpServletRequest.setAttribute("username", username);
             filterChain.doFilter(httpServletRequest, httpServletResponse);

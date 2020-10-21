@@ -1,5 +1,6 @@
 package com.ktnet.auth_server.auth;
 
+import com.ktnet.auth_server.client.ClientService;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
 import org.slf4j.Logger;
@@ -21,8 +22,11 @@ public class LoginController {
 
     private final UserService userService;
 
-    public LoginController(UserService userService) {
+    private final ClientService clientService;
+
+    public LoginController(UserService userService, ClientService clientService) {
         this.userService = userService;
+        this.clientService = clientService;
         credentials.put("hellokoding", "hellokoding");
         credentials.put("hellosso", "hellosso");
     }

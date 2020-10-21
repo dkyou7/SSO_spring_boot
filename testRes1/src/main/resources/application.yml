@@ -4,6 +4,10 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
 services:
   # auth: http://localhost:8081/
   auth: http://localhost:8080/login
+
+oauth:
+  client_id: testRes1
