@@ -32,9 +32,6 @@ public class Res1Application {
         temp.put("oauth.client_id",clientId);
         temp.put("services.auth",authService);
         registrationBean.setInitParameters(Collections.unmodifiableMap(temp));
-//        registrationBean.setInitParameters(Collections.singletonMap("oauth.client_id",clientId));
-//        registrationBean.setInitParameters(Collections.singletonMap("services.auth", authService));
-
         registrationBean.addUrlPatterns("/go_auth");
 
         return registrationBean;

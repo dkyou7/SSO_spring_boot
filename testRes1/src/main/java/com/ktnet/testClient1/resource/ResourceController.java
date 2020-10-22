@@ -34,7 +34,7 @@ public class ResourceController {
     @GetMapping("/")
     public String home(HttpServletRequest request,Model model) {
         logger.info("[testRes1 서버] 1. 처음 접속하는 화면입니다. ================= 로그인 하기를 클릭하시면 됩니다.");
-        if(CookieUtil.getValue(request,jwtTokenCookieName)== null){
+        if(CookieUtil.getValue(request,jwtTokenCookieName) == null){
             /**
              * todo
              * 쿠키에 아무 정보도 없다면.. 다른 도메인에서 접속 정보가 존재할 수도 있으니까 인증서버 세션이 존재하는지 파악해 보자.

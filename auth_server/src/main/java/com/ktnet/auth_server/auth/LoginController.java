@@ -1,8 +1,12 @@
 package com.ktnet.auth_server.auth;
 
 import com.ktnet.auth_server.client.ClientService;
+import com.ktnet.auth_server.user.Role;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -39,6 +43,39 @@ public class LoginController {
         return "redirect:/loginTest";
     }
 
+    @GetMapping("/devLogin")
+    public String dispLoginDev(Model model){
+        logger.info("[인증서버] loginDev() ===> 개발자 로그인 창으로 이동합니다");
+        DevUserLoginDto dto = new DevUserLoginDto();
+        model.addAttribute("user",dto);
+        return "developers/login";
+    }
+
+    @PostMapping("/devLogin")
+    public String loginDev(Model model,
+                           @ModelAttribute("user") DevUserLoginDto dto){
+        logger.info("[인증서버] loginDev() ===> 개발자 로그인 start =============");
+        User findUser = userService.findUserByEmail(dto.getEmail());
+        if(findUser == null || !findUser.getPassword().equals(dto.getPassword())){
+            logger.info("[인증서버] loginDev() ===> 유저가 존재하지 않거나, 비밀번호가 틀립니다.");
+            model.addAttribute("error", "Invalid username or password!");
+            return "developers/login";
+        }
+        if(findUser.getRole().equals(Role.USER)){
+            logger.info("[인증서버] loginDev() ===> 어드민 권한이 없습니다.");
+            return "developers/login";
+        }
+        model.addAttribute("user",findUser);
+        return "developers/index";
+    }
+
+    @Getter @Setter
+    @NoArgsConstructor
+    class DevUserLoginDto{
+        private String email;
+        private String password;
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam("redirect_uri") String redirectUrl,
                         @RequestParam("client_id") String clientId,
@@ -58,7 +95,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @ModelAttribute("user") User user, Model model){
+    public String login(HttpServletRequest httpServletRequest,
+                        HttpServletResponse httpServletResponse,
+                        @ModelAttribute("user") User user, Model model){
         logger.info("[인증서버] post login() ============" + user);
         User findUser = userService.findUserByEmail(user.getEmail());
         if(findUser == null || !findUser.getPassword().equals(user.getPassword())){

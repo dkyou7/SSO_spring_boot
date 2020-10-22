@@ -3,6 +3,7 @@ package com.ktnet.auth_server.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -28,5 +29,11 @@ public class UserService {
         userRepository.save(user3);
         userRepository.save(user4);
         userRepository.save(user5);
+    }
+
+    @Transactional
+    public void changeUserRoleAdmin(Long id){
+        User byEmail = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        byEmail.setRole(Role.ADMIN);
     }
 }
