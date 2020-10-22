@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,7 @@ public class LoginController {
 
     @PostMapping("/devLogin")
     public String loginDev(Model model,
+                           HttpSession session,
                            @ModelAttribute("user") DevUserLoginDto dto){
         logger.info("[인증서버] loginDev() ===> 개발자 로그인 start =============");
         User findUser = userService.findUserByEmail(dto.getEmail());
@@ -66,6 +68,7 @@ public class LoginController {
             return "developers/login";
         }
         model.addAttribute("user",findUser);
+        session.setAttribute("user",findUser);
         return "developers/index";
     }
 
@@ -95,7 +98,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(HttpServletRequest httpServletRequest,
+    public String login(HttpSession session,
                         HttpServletResponse httpServletResponse,
                         @ModelAttribute("user") User user, Model model){
         logger.info("[인증서버] post login() ============" + user);
@@ -109,8 +112,7 @@ public class LoginController {
         String token = JwtUtil.generateToken(signingKey, user.getEmail());
 
         // 쿠키와 세션을 동시에 만들어준다.
-        HttpSession httpSession = httpServletRequest.getSession();
-        httpSession.setAttribute(user.getEmail(),token);
+        session.setAttribute(user.getEmail(),token);
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
         return "redirect:" + user.getRedirectUrl()+"/test/"+token;
     }
