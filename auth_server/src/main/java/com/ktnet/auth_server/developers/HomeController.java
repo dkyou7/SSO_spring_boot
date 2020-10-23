@@ -1,6 +1,5 @@
 package com.ktnet.auth_server.developers;
 
-import com.ktnet.auth_server.auth.LoginController;
 import com.ktnet.auth_server.user.Role;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
@@ -65,6 +64,8 @@ public class HomeController {
         }
         model.addAttribute("user",findUser);
         session.setAttribute("user",findUser);
+
+        logger.info("[인증서버] loginDev() ===> 개발자 로그인 end =============");
         return "developers/index";
     }
 
