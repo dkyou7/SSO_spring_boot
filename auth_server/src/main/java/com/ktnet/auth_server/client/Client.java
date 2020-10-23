@@ -19,6 +19,6 @@ public class Client implements Serializable {
     private String redirectUrl;
 
     @ManyToOne
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "user_id")
     private User user;
 }

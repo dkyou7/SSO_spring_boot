@@ -22,7 +22,7 @@ public class ClientService {
 
     @Transactional
     public void createDummy() {
-        User findUser1 = userRepository.findByEmail("test1");
+        User findUser1 = userRepository.findByEmail("test1@naver.com");
         Client client = Client.builder().resourceId("testRes1").redirectUrl("http://localhost:8181/success").user(findUser1).build();
         clientRepository.save(client);
 
