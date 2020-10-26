@@ -1,20 +1,15 @@
 package com.ktnet.auth_server.auth;
 
-import com.ktnet.auth_server.client.ClientService;
-import com.ktnet.auth_server.user.Role;
-import com.ktnet.auth_server.user.User;
-import com.ktnet.auth_server.user.UserService;
+import com.ktnet.auth_server.account.Account;
+import com.ktnet.auth_server.account.AccountService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -27,13 +22,11 @@ public class LoginController {
     private static final Map<String, String> credentials = new HashMap<>();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final UserService userService;
+    private final AccountService accountService;
 
-    private final ClientService clientService;
 
-    public LoginController(UserService userService, ClientService clientService) {
-        this.userService = userService;
-        this.clientService = clientService;
+    public LoginController(AccountService accountService) {
+        this.accountService = accountService;
         credentials.put("hellokoding", "hellokoding");
         credentials.put("hellosso", "hellosso");
     }
@@ -89,10 +82,8 @@ public class LoginController {
             return "redirect:"+redirectUrl+"/fail";
         }
         logger.info("[인증서버] login() ===> 로그인 창으로 이동합니다");
-        User user = new User();
-        user.setRedirectUrl(redirectUrl);
-        user.setClientId(clientId);
-        model.addAttribute("user",user);
+        Account account = new Account(redirectUrl,clientId);
+        model.addAttribute("user",account);
 //        return "loginTest";
         return "index";
     }
@@ -100,20 +91,20 @@ public class LoginController {
     @PostMapping("/login")
     public String login(HttpSession session,
                         HttpServletResponse httpServletResponse,
-                        @ModelAttribute("user") User user, Model model){
-        logger.info("[인증서버] post login() ============" + user);
-        User findUser = userService.findUserByEmail(user.getEmail());
-        if(findUser == null || !findUser.getPassword().equals(user.getPassword())){
+                        @ModelAttribute("user") Account account, Model model){
+        logger.info("[인증서버] post login() ============" + account);
+        Account findAccount = accountService.findUserByEmail(account.getEmail());
+        if(findAccount == null || !findAccount.getPassword().equals(account.getPassword())){
 //        if (username == null || !credentials.containsKey(username) || !credentials.get(username).equals(password)){
             model.addAttribute("error", "Invalid username or password!");
             return "index";
         }
-        findUser.mergeUser(user);   // 유저정보를 업데이트 한다.
-        String token = JwtUtil.generateToken(signingKey, user.getEmail());
+        findAccount.mergeUser(account);   // 유저정보를 업데이트 한다.
+        String token = JwtUtil.generateToken(signingKey, account.getEmail());
 
         // 쿠키와 세션을 동시에 만들어준다.
-        session.setAttribute(user.getEmail(),token);
+        session.setAttribute(account.getEmail(),token);
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
-        return "redirect:" + user.getRedirectUrl()+"/test/"+token;
+        return "redirect:" + account.getRedirectUrl()+"/test/"+token;
     }
 }
