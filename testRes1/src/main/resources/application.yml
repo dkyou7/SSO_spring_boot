@@ -6,4 +6,7 @@ spring:
     suffix: .html
 services:
 #  auth: http://localhost:8081/
-  auth: http://192.168.79.112:8081/
+  auth: http://192.168.79.112:8080/login
+
+oauth:
+  client_id: testRes1

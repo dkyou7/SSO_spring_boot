@@ -9,12 +9,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 public class Res1Application {
 
     @Value("${services.auth}")
     private String authService;
+
+    @Value("${oauth.client_id}")
+    private String clientId;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Bean
@@ -22,8 +28,11 @@ public class Res1Application {
         logger.info("[testRes1 서버] Res1Application class ================= 필터를 처음 등록합니다.");
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new JwtFilter());
-        registrationBean.setInitParameters(Collections.singletonMap("services.auth", authService));
-        registrationBean.addUrlPatterns("/test");
+        Map<String,String> temp = new HashMap<String, String>();
+        temp.put("oauth.client_id",clientId);
+        temp.put("services.auth",authService);
+        registrationBean.setInitParameters(Collections.unmodifiableMap(temp));
+        registrationBean.addUrlPatterns("/go_auth");
 
         return registrationBean;
     }
