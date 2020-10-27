@@ -1,13 +1,20 @@
 spring:
   datasource:
-#    url: jdbc:h2:tcp://localhost/~/test
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
-    url: jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.142)(PORT=12533))(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.144)(PORT=12533))(CONNECT_DATA=(SERVICE_NAME=BOA)))
-    username: trade
-    password: trade_dev
-    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      trade:
+        jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.142)(PORT=12533))(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.144)(PORT=12533))(CONNECT_DATA=(SERVICE_NAME=BOA)))
+        username: trade
+        password: trade_dev
+        driver-class-name: oracle.jdbc.OracleDriver
+
+      sso:
+        jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.142)(PORT=12533))(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.144)(PORT=12533))(CONNECT_DATA=(SERVICE_NAME=BOA)))
+        username: sso
+        password: sso_dev
+        driver-class-name: oracle.jdbc.OracleDriver
+
+
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -22,4 +29,3 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-  # org.hibernate.type: trace

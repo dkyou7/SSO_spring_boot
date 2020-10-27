@@ -2,6 +2,8 @@ package com.ktnet.auth_server.UTH_Member;
 
 import com.ktnet.auth_server.auth.CookieUtil;
 import com.ktnet.auth_server.auth.JwtUtil;
+import com.ktnet.auth_server.site.Site;
+import com.ktnet.auth_server.site.SiteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,14 +19,20 @@ public class MemberController {
     private static final String signingKey = "signingKey";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MemberService memberService;
+    private final SiteService siteService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, SiteService siteService) {
         this.memberService = memberService;
+        this.siteService = siteService;
     }
 
     @GetMapping("/test")
     public Member uthtest(){
         Member memberByPrtnum = memberService.findByUserId("MILLEPIA");
+        Site site = siteService.findByGID("KCMNT");
+
+        System.out.println("site = " + site);
+
         return memberByPrtnum;
     }
     @GetMapping("/login")

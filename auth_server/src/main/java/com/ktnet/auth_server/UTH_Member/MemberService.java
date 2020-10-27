@@ -1,5 +1,7 @@
 package com.ktnet.auth_server.UTH_Member;
 
+import com.ktnet.auth_server.site.Site;
+import com.ktnet.auth_server.site.SiteRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

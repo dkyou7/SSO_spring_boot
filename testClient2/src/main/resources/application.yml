@@ -1,8 +1,0 @@
-server:
-  port: 8083
-spring:
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-services:
-  auth: http://localhost:8080/login
