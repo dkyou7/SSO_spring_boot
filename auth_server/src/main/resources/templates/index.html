@@ -32,7 +32,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form th:method="POST" th:action="@{/login}" th:object="${user}" class="login100-form validate-form">
+				<form th:method="POST" th:action="@{/login}" th:object="${account}" class="login100-form validate-form">
 					<input type="hidden" th:field="*{redirectUrl}"/>
 					<input type="hidden" th:field="*{clientId}"/>
 					<span class="login100-form-title p-b-26">

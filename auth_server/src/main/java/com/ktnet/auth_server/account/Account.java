@@ -7,14 +7,15 @@ import com.ktnet.auth_server.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter @Builder @ToString
+@NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+public class Account implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")

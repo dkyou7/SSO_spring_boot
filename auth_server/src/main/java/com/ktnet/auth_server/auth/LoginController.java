@@ -83,7 +83,7 @@ public class LoginController {
         }
         logger.info("[인증서버] login() ===> 로그인 창으로 이동합니다");
         Account account = new Account(redirectUrl,clientId);
-        model.addAttribute("user",account);
+        model.addAttribute("account",account);
 //        return "loginTest";
         return "index";
     }
@@ -91,19 +91,23 @@ public class LoginController {
     @PostMapping("/login")
     public String login(HttpSession session,
                         HttpServletResponse httpServletResponse,
-                        @ModelAttribute("user") Account account, Model model){
-        logger.info("[인증서버] post login() ============" + account);
-        Account findAccount = accountService.findUserByEmail(account.getEmail());
-        if(findAccount == null || !findAccount.getPassword().equals(account.getPassword())){
-//        if (username == null || !credentials.containsKey(username) || !credentials.get(username).equals(password)){
+                        @RequestParam("email") String email,
+                        @RequestParam("password") String password,
+                        @RequestParam("redirectUrl") String redirectUrl,
+                        @RequestParam("clientId") String clientId,
+                        Model model){
+        logger.info("[인증서버] post login() ================================");
+        Account findAccount = accountService.findUserByEmail(email);
+        if(findAccount == null || !findAccount.getPassword().equals(password)){
             model.addAttribute("error", "Invalid username or password!");
             return "index";
         }
+        Account account = new Account(redirectUrl,clientId);
         findAccount.mergeUser(account);   // 유저정보를 업데이트 한다.
-        String token = JwtUtil.generateToken(signingKey, account.getEmail());
+        String token = JwtUtil.generateToken(signingKey, email);
 
         // 쿠키와 세션을 동시에 만들어준다.
-        session.setAttribute(account.getEmail(),token);
+        session.setAttribute(findAccount.getEmail(),token);
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
         return "redirect:" + account.getRedirectUrl()+"/test/"+token;
     }
