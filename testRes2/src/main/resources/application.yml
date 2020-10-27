@@ -5,4 +5,5 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 services:
-  auth: http://localhost:8083/
+  #  auth: http://localhost:8083/
+  auth: http://192.168.79.112:8083/

@@ -33,7 +33,6 @@ public class MemberController {
         MemberDto user = new MemberDto();
         user.setRedirectUrl(redirectUrl);
         model.addAttribute("user",user);
-//        return "loginTest";
         return "index";
     }
     @PostMapping("/login")
@@ -42,7 +41,6 @@ public class MemberController {
         Member userByEmail = memberService.findByUserId(username);
         logger.info("[인증서버] userByEmail toSting ============" + userByEmail);
         if(userByEmail == null || !userByEmail.getPRTNUM().equals(password)){
-//        if (username == null || !credentials.containsKey(username) || !credentials.get(username).equals(password)){
             model.addAttribute("error", "Invalid username or password!");
             return "index";
         }
@@ -52,7 +50,8 @@ public class MemberController {
         username = userByEmail.getNM();
 
         String token = JwtUtil.generateToken(signingKey, username);
-        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
+//        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
+        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "192.168.79.112");
         return "redirect:" + user.getRedirectUrl()+"/test/"+username;
     }
 }

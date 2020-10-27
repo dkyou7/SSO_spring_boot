@@ -28,6 +28,7 @@ public class ResourceController {
         JSONObject jObject = new JSONObject(s);
         username = jObject.getString("sub");
         model.addAttribute("username", username);
+        logger.info("[testRes1 서버] END. 절차가 끝난 후 이름을 반환합니다. =================  "+username);
 //        return "success_page";
         return "index";
     }
