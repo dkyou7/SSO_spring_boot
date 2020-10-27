@@ -19,6 +19,7 @@ public class FederationService {
     private final UserRepository userRepository;
     private final SiteRepository siteRepository;
     private final AccountRepository accountRepository;
+    private final FederationRepository federationRepository;
 
 
     @Transactional
@@ -36,5 +37,10 @@ public class FederationService {
 
         // 계정 저장
         accountRepository.save(savedAccount);
+    }
+
+    @Transactional
+    public Federation findByAccountId(Long id) {
+        return federationRepository.findByAccountId(id);
     }
 }

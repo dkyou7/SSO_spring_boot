@@ -2,6 +2,8 @@ package com.ktnet.auth_server.auth;
 
 import com.ktnet.auth_server.account.Account;
 import com.ktnet.auth_server.account.AccountService;
+import com.ktnet.auth_server.federation.Federation;
+import com.ktnet.auth_server.federation.FederationService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,10 +25,12 @@ public class LoginController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final AccountService accountService;
+    private final FederationService federationService;
 
 
-    public LoginController(AccountService accountService) {
+    public LoginController(AccountService accountService, FederationService federationService) {
         this.accountService = accountService;
+        this.federationService = federationService;
         credentials.put("hellokoding", "hellokoding");
         credentials.put("hellosso", "hellosso");
     }
@@ -98,13 +102,15 @@ public class LoginController {
                         Model model){
         logger.info("[인증서버] post login() ================================");
         Account findAccount = accountService.findUserByEmail(email);
+
         if(findAccount == null || !findAccount.getPassword().equals(password)){
             model.addAttribute("error", "Invalid username or password!");
             return "index";
         }
+        Federation federation = federationService.findByAccountId(findAccount.getId());
         Account account = new Account(redirectUrl,clientId);
         findAccount.mergeUser(account);   // 유저정보를 업데이트 한다.
-        String token = JwtUtil.generateToken(signingKey, email);
+        String token = JwtUtil.generateToken(signingKey, federation.getKId());
 
         // 쿠키와 세션을 동시에 만들어준다.
         session.setAttribute(findAccount.getEmail(),token);

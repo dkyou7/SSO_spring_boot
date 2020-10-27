@@ -21,7 +21,16 @@ public class ResourceController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/login")
-    public String home() {
+    public String go_login(HttpServletRequest request, Model model) {
+        logger.info("[Res1 서버] 낚아 채가기 전에 할 행위가 있다. 토큰이 있는지 검색해본다.");
+        if(CookieUtil.getValue(request,jwtTokenCookieName) != null){
+            String username = CookieUtil.getValue(request, jwtTokenCookieName);
+            String s = testDecodeJWT(username);
+            JSONObject jObject = new JSONObject(s);
+            username = jObject.getString("sub");
+            model.addAttribute("username", username);
+            return "redirect:/";
+        }
         logger.info("[Res1 서버] home() ================= 1. 이제 여기서 인증서버에서 낚아채갑니다. jwt filter 에 등록되어있기 때문에");
         return "redirect:/go_auth";
     }
