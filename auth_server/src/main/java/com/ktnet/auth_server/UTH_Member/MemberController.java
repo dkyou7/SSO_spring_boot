@@ -2,11 +2,8 @@ package com.ktnet.auth_server.UTH_Member;
 
 import com.ktnet.auth_server.auth.CookieUtil;
 import com.ktnet.auth_server.auth.JwtUtil;
-import com.ktnet.auth_server.site.Site;
-import com.ktnet.auth_server.site.SiteService;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.ktnet.auth_server.site.Federation;
+import com.ktnet.auth_server.site.FederationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,19 +19,16 @@ public class MemberController {
     private static final String signingKey = "signingKey";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MemberService memberService;
-    private final SiteService siteService;
+    private final FederationService federationService;
 
-    public MemberController(MemberService memberService, SiteService siteService) {
+    public MemberController(MemberService memberService, FederationService federationService) {
         this.memberService = memberService;
-        this.siteService = siteService;
+        this.federationService = federationService;
     }
 
     @GetMapping("/test")
     public Member uthtest(){
         Member memberByPrtnum = memberService.findByUserId("MILLEPIA");
-        Site site = siteService.findByGID("KCMNT");
-
-        System.out.println("site = " + site);
 
         return memberByPrtnum;
     }
@@ -112,11 +106,21 @@ public class MemberController {
             model.addAttribute("error", "Invalid username or password!");
             return "index";
         }
+        Federation federation = federationService.findByUserID(userByEmail.getUSERID());
+        /**
+         * todo: k-sign 으로 토큰 요청 보내야 한다.
+         */
+        String vid = federation.getVID();
+        String vid_token = JwtUtil.generateToken(signingKey,vid);
+
         // 다른 정보를 얻고싶다면 username 에 다른걸 넣을 수도 있다.
         String username = userByEmail.getNM();
 
         String token = JwtUtil.generateToken(signingKey, username);
 //        CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "localhost");
+        /**
+         * todo: redirect url 을 분해해서 도메인으로 만들어 주면 되지 않을까?
+         */
         CookieUtil.create(httpServletResponse, jwtTokenCookieName, token, false, -1, "192.168.79.112");
         return "redirect:" + redirectUrl+"/test/"+token;
     }

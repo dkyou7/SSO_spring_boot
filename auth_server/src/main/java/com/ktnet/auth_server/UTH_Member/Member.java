@@ -80,6 +80,7 @@ public class Member {
 //    private String ALMEAIL5;
     private String PERSONAL_MAIL_YN;
 
+    public String getUSERID() {return USERID;}
     public String getNM() {
         return NM;
     }
