@@ -43,4 +43,9 @@ public class AccountService {
         User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
         account.setUser(user);
     }
+
+    @Transactional
+    public int getSize(){
+        return accountRepository.findAll().size();
+    }
 }

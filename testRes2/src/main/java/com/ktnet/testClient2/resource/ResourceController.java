@@ -8,16 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 import org.thymeleaf.model.IModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ResourceController {
     private static final String jwtTokenCookieName = "JWT-TOKEN";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final String sessionKey = "testSessionKey";
 
     @GetMapping("/login")
     public String home() {
@@ -39,14 +42,19 @@ public class ResourceController {
 
     @GetMapping("/")
     public String home(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession();
+        String test =(String) session.getAttribute(sessionKey);
+        System.out.println("test = " + test);
+        RestTemplate restTemplate = new RestTemplate();
+        String jwt = restTemplate.getForObject("http://localhost:8080/sessionCheck", String.class);
+//        System.out.println("jwt = " + jwt);
         logger.info("[testRes2 서버] 1. 처음 접속하는 화면입니다. ================= 로그인 하기를 클릭하시면 됩니다.");
-        if(CookieUtil.getValue(request,jwtTokenCookieName)== null){
+        if(jwt == null){
             return "index";
         }
-        String username = CookieUtil.getValue(request, jwtTokenCookieName);
-        String s = testDecodeJWT(username);
+        String s = testDecodeJWT(jwt);
         JSONObject jObject = new JSONObject(s);
-        username = jObject.getString("sub");
+        String username = jObject.getString("sub");
         model.addAttribute("username", username);
 //        return "success_page";
         return "index";

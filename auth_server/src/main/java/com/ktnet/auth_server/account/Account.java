@@ -39,6 +39,11 @@ public class Account implements Serializable {
         this.clientId=clientId;
     }
 
+    public Account(String asdf, String id, String password) {
+        this.password = password;
+        this.email = id;
+    }
+
     public void mergeUser(Account info){
         this.clientId = info.getClientId();
         this.redirectUrl = info.getRedirectUrl();
