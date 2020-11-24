@@ -63,7 +63,6 @@ public class LoginController {
         if (value != null){
             return "redirect:" + redirectUrl+"/test/"+value;
         }
-
         if(resType == null || !resType.equals("code")){
             logger.info("[인증서버] login() ===> 코드 방식이 아닙니다. 접근 불가!");
             return "redirect:"+redirectUrl+"/fail";

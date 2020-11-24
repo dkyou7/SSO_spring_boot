@@ -38,9 +38,10 @@ public class ResourceController {
             return "redirect:/";
         }
         logger.info("[Res1 서버] home() ================= 1. 이제 여기서 인증서버에서 낚아채갑니다. jwt filter 에 등록되어있기 때문에");
-        return "redirect:/go_auth";
+        return "redirect:http://localhost:8080/login?redirect_uri=http://localhost:8181&client_id=testClient1&response_type=code";
+//        return "redirect:/go_auth";
     }
-    @GetMapping("/go_auth/test/{token}")
+    @GetMapping("/test/{token}")
     public String protectedResourceTest(HttpServletRequest request, HttpServletResponse httpServletResponse,@PathVariable("token") String code) throws Exception{
         logger.info("[res1 서버] /go_auth/res1 =================" + code);
 

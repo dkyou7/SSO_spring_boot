@@ -14,8 +14,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth_server" target="1.8" />
-      <module name="testClient1" target="1.8" />
-      <module name="testClient2" target="1.8" />
       <module name="testRes1" target="1.8" />
       <module name="testRes2" target="1.8" />
     </bytecodeTargetLevel>
@@ -23,8 +21,6 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="auth_server" options="-parameters" />
-      <module name="testClient1" options="-parameters" />
-      <module name="testClient2" options="-parameters" />
       <module name="testRes1" options="-parameters" />
       <module name="testRes2" options="-parameters" />
     </option>
