@@ -1,9 +1,30 @@
 server:
-  port: 8183
+  port: 8083
+
+
 spring:
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-services:
-  # auth: http://localhost:8083/
-  auth: http://localhost:8080/login
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.hbm2ddl.auto: update
+    showSql: true
+
+
+security:
+  oauth2:
+    jwt:
+      signkey: 123@#$
+    client:
+      client-id: testClientId2
+      client-secret: testSecret2
+    resource:
+      token-info-uri: http://localhost:8081/oauth/check_token
