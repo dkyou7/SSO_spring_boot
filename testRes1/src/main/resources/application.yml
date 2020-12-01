@@ -21,6 +21,8 @@ spring:
 
 security:
   oauth2:
+    jwt:
+      signkey: 123@#$
     client:
       client-id: testClientId
       client-secret: testSecret
