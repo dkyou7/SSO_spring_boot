@@ -19,3 +19,8 @@ values('testClientId2',null,'{bcrypt}$2a$10$bU8LBnfD8UV.VWSfeAaVQOqems6SPZjHzmph
 
 - 재발급 토큰 생성
 http://localhost:8081/oauth2/token/refresh?refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJka3lvdTdAbmF2ZXIuY29tIiwic2NvcGUiOlsicmVhZCJdLCJhdGkiOiI2ODgyYzMxMy1hZjM0LTRiNTUtYjM5Zi03ODA5ZGNkNDI3MmMiLCJleHAiOjE2MDY4NTE3OTMsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiIyZDIzYWE2OS1jYTUwLTQwNWUtYWYxMC0zMTQwNzg3YzVjY2YiLCJjbGllbnRfaWQiOiJ0ZXN0Q2xpZW50SWQifQ.OvzyYJJR7vaiQoI0QQLUf0PSIVVqtluXG8oeeVTIbVc
+
+
+- todo
+하나의 인증 서버에 두개의 리소스가 접근하고자 할 때, 동적으로 yml 파일을 설정할 수 있어야 한다.
+https://myeongjae.kim/blog/2020/02/01/spring-oauth-2-resource-server-handle-multiple-auth-server-tokens
