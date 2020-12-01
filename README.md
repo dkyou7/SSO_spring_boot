@@ -1,12 +1,15 @@
 # config
-- db
-    - h2_200 : 8082
 
-- auth_server : 8080
-    - /save : 더미데이터 삽입하기
+- 인증 요청
+http://localhost:8081/oauth/authorize?client_id=testClientId&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=read
 
-- testClient1 : 8081
-- testClient2 : 8083
+- DB insert
+insert into oauth_client_details(client_id, resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove)
+values('testClientId',null,'{bcrypt}$2a$10$Vc/.wYqkai/Ln0qDi4y0O.5hflW.yDdMuV0IWJCMvXMiMV4SOgdAS','read,write','authorization_code,refresh_token','http://localhost:8081/oauth2/callback','ROLE_USER',36000,50000,null,null);
 
-- testRes1 : 8181
-- testRes2 : 8183
+{bcrypt} 부분은 testSecret을 암호화 한 것으로, test code 를 구동시켜 출력한 것임.
+
+유저 인증 테스트 코드를 돌린 후 유저 정보로 로그인 가능하도록 구현.
+
+- 재발급 토큰 생성
+http://localhost:8081/oauth2/token/refresh?refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJka3lvdTdAbmF2ZXIuY29tIiwic2NvcGUiOlsicmVhZCJdLCJhdGkiOiI2ODgyYzMxMy1hZjM0LTRiNTUtYjM5Zi03ODA5ZGNkNDI3MmMiLCJleHAiOjE2MDY4NTE3OTMsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiIyZDIzYWE2OS1jYTUwLTQwNWUtYWYxMC0zMTQwNzg3YzVjY2YiLCJjbGllbnRfaWQiOiJ0ZXN0Q2xpZW50SWQifQ.OvzyYJJR7vaiQoI0QQLUf0PSIVVqtluXG8oeeVTIbVc
