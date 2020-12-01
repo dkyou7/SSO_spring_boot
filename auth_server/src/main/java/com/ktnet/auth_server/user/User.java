@@ -1,32 +1,81 @@
 package com.ktnet.auth_server.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ktnet.auth_server.account.Account;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Getter @Setter @ToString
 @Builder
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+public class User implements Serializable, UserDetails {
 
+    @Id // pk
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long msrl;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String uid;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(length = 100)
+    private String password;
+
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(length = 100)
+    private String provider;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
     private int age;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
 
-    @Enumerated(EnumType.STRING)
-    private UserStatus userStatus; // 계정 상태[ACTIVE(활성),DORMANT(휴면),INACTIVE(비활성)]
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getUsername() {
+        return this.uid;
+    }
 
-    @OneToMany(mappedBy = "user")
-    private final List<Account> accounts = new ArrayList<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

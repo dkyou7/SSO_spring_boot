@@ -1,20 +1,25 @@
+server:
+  port: 8081
+
+
+oauth2:
+  clientId: testClientId
+  clientSecret: testSecret
+  grantType: authorization_code
+  callback: http://localhost:8081/oauth2/callback
+  token: http://localhost:8081/oauth/token
+
 spring:
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
     driver-class-name: org.h2.Driver
+    username: sa
   jpa:
-    hibernate:
-      ddl-auto: create
-      # show_sql: true
-      format_sql: true
-      dialect: org.hibernate.dialect.H2Dialect
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-
-logging:
-  level:
-    org.hibernate.SQL: debug
-  # org.hibernate.type: trace
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.hbm2ddl.auto: none
+    showSql: true

@@ -51,7 +51,7 @@ public class Account implements Serializable {
 
     public void setUser(User user){
         this.user = user;
-        user.getAccounts().add(this);
+//        user.getAccounts().add(this);
     }
 
     public void addFederation(Federation federation){
