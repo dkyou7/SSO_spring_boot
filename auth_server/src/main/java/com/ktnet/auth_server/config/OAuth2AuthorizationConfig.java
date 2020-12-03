@@ -27,6 +27,15 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailService userDetailService;
 
+    /**
+     * 클라이언트 정보를 저장하는 메서드입니다.
+     * .withClient("testClientId")
+     * .secret("testSecret")
+     * .redirectUris("http://localhost:8081/oauth2/callback")
+     * .authorizedGrantTypes("authorization_code")
+     * .scopes("read", "write")
+     * .accessTokenValiditySeconds(30000);
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource).passwordEncoder(passwordEncoder);

@@ -24,7 +24,7 @@ class UserRepositoryTest {
     @Test
     public void insertNewUser() {
         userJpaRepo.save(User.builder()
-                .uid("dkyou7@naver.com")
+                .uid("test@naver.com")
                 .password(passwordEncoder.encode("123"))
                 .name("happydaddy")
                 .roles(Collections.singletonList("ROLE_USER"))

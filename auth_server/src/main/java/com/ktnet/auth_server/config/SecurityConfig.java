@@ -12,6 +12,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider authenticationProvider;
 
+    /**
+     * 등록된 유저 정보
+     * .withUser("dkyou7@naver.com")
+     * .password("123")
+     * .roles("USER");
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);

@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableResourceServer
@@ -21,7 +22,8 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     public void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
         http.authorizeRequests()
-                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
+//                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
+                .antMatchers("/**").access("#oauth2.hasScope('read')")
                 .anyRequest().authenticated();
     }
 
@@ -30,7 +32,10 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         return new JwtTokenStore(accessTokenConverter());
     }
 
-
+    @Bean
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
