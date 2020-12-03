@@ -12,6 +12,10 @@ values('testClientId',null,'{bcrypt}$2a$10$Vc/.wYqkai/Ln0qDi4y0O.5hflW.yDdMuV0IW
 insert into oauth_client_details(client_id, resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove)
 values('testClientId2',null,'{bcrypt}$2a$10$bU8LBnfD8UV.VWSfeAaVQOqems6SPZjHzmphnQGl8aPweZVEgHKue','read,write','authorization_code,refresh_token','http://localhost:8083/oauth2/callback','ROLE_USER',36000,50000,null,null);
 ---
+- testClientId3:testSecret3
+insert into oauth_client_details(client_id, resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove)
+values('testClientId3',null,'{bcrypt}$2a$10$8R7U2jebuHEQpcKl4SA7U.jYrSsjI.avsIj2m92SGsOFXOfIaAj2O','read,write','authorization_code,refresh_token','http://localhost:8080/oauth2/callback','ROLE_USER',36000,50000,null,null);
+---
 {bcrypt} 부분은 testSecret을 암호화 한 것으로, test code 를 구동시켜 출력한 것임.
 
 

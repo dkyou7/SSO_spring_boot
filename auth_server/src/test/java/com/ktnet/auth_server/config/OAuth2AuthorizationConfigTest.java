@@ -18,6 +18,11 @@ class OAuth2AuthorizationConfigTest {
     @Test
     public void EncodingTest2() {
         String testSecret = passwordencoder.encode("testSecret2");
-        System.out.println("testSecret = " + testSecret);
+        System.out.println("testSecret2 = " + testSecret);
+    }
+    @Test
+    public void EncodingTest3() {
+        String testSecret = passwordencoder.encode("testSecret3");
+        System.out.println("testSecret3 = " + testSecret);
     }
 }

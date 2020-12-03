@@ -1,17 +1,7 @@
 package com.ktnet.testClient1;
 
-import com.ktnet.testClient1.resource.JwtFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 public class Res1Application {
