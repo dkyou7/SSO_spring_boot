@@ -1,11 +1,10 @@
-package com.ktnet.testClient1.resource;
+package com.ktnet.testClient1.oauth2;
 
-import lombok.Getter;
+import lombok.Data;
 
-import lombok.Setter;
+import javax.persistence.Entity;
 
-@Getter
-@Setter
+@Data
 public class OAuthToken {
     private String access_token;
     private String token_type;

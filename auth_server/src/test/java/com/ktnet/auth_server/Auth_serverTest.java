@@ -19,6 +19,6 @@ class Auth_serverTest {
     @Test
     public void contextLoads() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        log.info(">>>>>>>>>>>>>>>>> "+passwordEncoder.encode("pass"));
+        log.info(">>>>>>>>>>>>>>>>> "+passwordEncoder.encode("123"));
     }
 }

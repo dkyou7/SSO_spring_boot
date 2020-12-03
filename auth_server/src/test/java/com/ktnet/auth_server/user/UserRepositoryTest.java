@@ -1,15 +1,13 @@
 package com.ktnet.auth_server.user;
 
-import com.ktnet.auth_server.config.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -22,12 +20,15 @@ class UserRepositoryTest {
 
 
     @Test
+    @Transactional
+    @Commit
     public void insertNewUser() {
-        userJpaRepo.save(User.builder()
-                .uid("test@naver.com")
+        User build = User.builder()
+                .uid("dkyou7@naver.com")
                 .password(passwordEncoder.encode("123"))
-                .name("happydaddy")
+                .name("dkyou7")
                 .roles(Collections.singletonList("ROLE_USER"))
-                .build());
+                .build();
+        userJpaRepo.save(build);
     }
 }

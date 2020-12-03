@@ -12,18 +12,6 @@ oauth2:
 
 security:
   oauth2:
-    client:
-      clientId: testClientId
-      clientSecret: testSecret
-      grantType: authorization_code
-      callback: http://localhost:8081/oauth2/callback
-      token: http://localhost:8081/oauth/token
-      # 아래 값들도 spirng에서 사용할 수 있도록 ResourceServerConfigurer를 구현해야 합니다.
-      client2:
-        client-id: ${OAUTH_CLIENT_ID2}
-        client-secret: ${OAUTH_CLIENT_SECRET2}
-      resource2:
-        token-info-uri: ${OAUTH_TOKEN_INFO_URI2}
     jwt:
       signkey: 123@#$
 
@@ -39,5 +27,5 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: none
+    properties.hibernate.hbm2ddl.auto: update
     showSql: true

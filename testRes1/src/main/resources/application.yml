@@ -19,18 +19,18 @@ spring:
     showSql: true
 
 oauth2:
-  clientId: testClientId3
-  clientSecret: testSecret3
+  clientId: testClientId1
+  clientSecret: testSecret1
   grantType: authorization_code
   callback: http://localhost:8080/oauth2/callback
-  token: http://localhost:8080/oauth/token
+  token: http://localhost:8081/oauth/token
 
 security:
   oauth2:
     jwt:
       signkey: 123@#$
     client:
-      client-id: testClientId
-      client-secret: testSecret
+      client-id: testClientId1
+      client-secret: testSecret1
     resource:
       token-info-uri: http://localhost:8081/oauth/check_token

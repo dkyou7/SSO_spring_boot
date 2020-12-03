@@ -1,7 +1,6 @@
 package com.ktnet.auth_server.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ktnet.auth_server.account.Account;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
