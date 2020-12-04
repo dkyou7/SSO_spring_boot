@@ -7,14 +7,20 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
 
     private final AccountRepository accountRepository;
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
 //    @Transactional
 //    public void createDummy() {

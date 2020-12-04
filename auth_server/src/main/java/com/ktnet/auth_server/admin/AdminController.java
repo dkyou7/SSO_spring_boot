@@ -40,4 +40,13 @@ public class AdminController {
     public String login(){
         return "admin/login";
     }
+
+    /**
+     * 사용자 전체 조회
+     */
+    @GetMapping("/users")
+    public String find_all_users(Model model){
+        model.addAttribute("users",userService.findAll());
+        return "admin/users";
+    }
 }
