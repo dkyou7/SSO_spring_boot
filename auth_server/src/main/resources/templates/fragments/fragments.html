@@ -28,10 +28,9 @@
             <a class="nav-link text-white" th:href="@{/user-manage-home}" sec:authorize="hasRole('ROLE_ADMIN')">사용자관리<span class="sr-only">(current)</span></a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">권한관리</a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">접속권한관리</a>
-            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">클라이언트관리</a>
+            <a class="nav-link text-white" th:href="@{/client-manage-home}" sec:authorize="hasRole('ROLE_ADMIN')">클라이언트관리</a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_DEVELOPER')">클라이언트등록</a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">접속로그조회</a>
-            <a class="nav-link text-white disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -117,10 +116,20 @@
     }())
 </script>
 
-<!--list-group fragment-->
+<!--사용자 관리 fragment-->
 <div th:fragment="user-manage-menu (currentMenu)" class="list-group">
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'home'}? active" href="#" th:href="@{/user-manage-home}">사용자관리</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'users'}? active" href="#" th:href="@{/users}">리스트 조회</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
+    <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
+</div>
+
+<!--클라이언트 관리 fragment-->
+<div th:fragment="client-manage-menu (currentMenu)" class="list-group">
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'home'}? active" href="#" th:href="@{/client-manage-home}">Client 관리</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'clients'}? active" href="#" th:href="@{/clients}">리스트 조회</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
