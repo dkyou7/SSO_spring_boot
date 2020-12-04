@@ -32,9 +32,8 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form th:method="POST" th:action="@{/login}" th:object="${account}" class="login100-form validate-form">
-					<input type="hidden" th:field="*{redirectUrl}"/>
-					<input type="hidden" th:field="*{clientId}"/>
+				<form th:method="POST" th:action="@{/login}" th:object="${user}" class="login100-form validate-form">
+					<input type="hidden" th:field="*{redirectUrl}" th:name="*{redirectUrl}"/>
 					<span class="login100-form-title p-b-26">
 						KTNET SSO
 					</span>
@@ -43,7 +42,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input class="input100" type="text" th:field="*{email}">
+						<input class="input100" type="text" name="username">
 						<span class="focus-input100" data-placeholder="Email"></span>
 					</div>
 
@@ -51,7 +50,7 @@
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-						<input class="input100" type="password" th:field="*{password}">
+						<input class="input100" type="password" name="password">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 

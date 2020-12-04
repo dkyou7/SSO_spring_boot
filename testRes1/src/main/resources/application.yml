@@ -25,7 +25,14 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     properties.hibernate.hbm2ddl.auto: update
     showSql: true
+    prefix: classpath:/templates/
+    suffix: .html
+services:
+#  auth: http://localhost:8081/
+  auth: http://192.168.79.112:8080/login
 
+oauth:
+  client_id: testRes1
 oauth2:
   clientId: testClientId1
   clientSecret: testSecret1
