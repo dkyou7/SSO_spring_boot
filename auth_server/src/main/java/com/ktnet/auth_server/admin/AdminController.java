@@ -44,7 +44,7 @@ public class AdminController {
     /**
      * 사용자 전체 조회
      */
-    @GetMapping("/users")
+    @GetMapping("/userManage")
     public String find_all_users(Model model){
         model.addAttribute("users",userService.findAll());
         return "admin/users";

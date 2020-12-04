@@ -2,6 +2,8 @@
 <html lang="en"
       xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--header fragment-->
 <head th:fragment="fragment-header">
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,20 +15,23 @@
     <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.css" />
     <title>KTNET SSO</title>
 </head>
-<nav th:fragment="main-navigation" class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" th:href="@{/}">KTNET SSO</a>
+
+<!--navbar fragment-->
+<nav th:fragment="main-navigation" class="navbar navbar-expand-lg navbar-light bg-info">
+    <a class="navbar-brand text-white" th:href="@{/admin}">KTNET SSO</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav mr-auto">
-            <a class="nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-link" th:href="@{/users}">사용자관리</a>
-            <a class="nav-link" href="#">권한관리</a>
-            <a class="nav-link" href="#">접속권한관리</a>
-            <a class="nav-link" href="#">클라이언트관리</a>
-            <a class="nav-link" href="#">접속로그조회</a>
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <!--<a class="nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>-->
+            <a class="nav-link text-white" th:href="@{/userManage}" sec:authorize="hasRole('ROLE_ADMIN')">사용자관리<span class="sr-only">(current)</span></a>
+            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">권한관리</a>
+            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">접속권한관리</a>
+            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">클라이언트관리</a>
+            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_DEVELOPER')">클라이언트등록</a>
+            <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">접속로그조회</a>
+            <a class="nav-link text-white disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item" sec:authorize="!isAuthenticated()">
@@ -67,6 +72,8 @@
         </ul>
     </div>
 </nav>
+
+<!--footer fragment-->
 <footer th:fragment="fragment-footer">
     <!-- jquery를 먼저 써줘야 bootstrap 이 동작함. -->
     <script src="/webjars/jquery/3.5.1/dist/jquery.min.js"></script>
@@ -86,6 +93,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
     -->
 </footer>
+
+<!--form validation-->
 <script type="application/javascript" th:fragment="form-validation">
     (function () {
         'use strict';
@@ -107,4 +116,17 @@
         }, false)
     }())
 </script>
+
+<!--list-group fragment-->
+<div th:fragment="user-manage-menu (currentMenu)" class="list-group">
+    <a class="list-group-item list-group-item-action disabled" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/userManage}">사용자관리</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'}? active" href="#" th:href="@{/userManage}">리스트 조회</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>
+    <a class="list-group-item list-group-item-action list-group-item-danger" th:classappend="${currentMenu == 'account'}? active" href="#" th:href="@{/settings/account}">계정</a>
+</div>
+
+
+
 </html>
