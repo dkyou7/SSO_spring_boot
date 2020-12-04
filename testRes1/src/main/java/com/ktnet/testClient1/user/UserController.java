@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Set;
@@ -46,7 +45,7 @@ public class UserController {
 //        Set<String> scopes = authentication.getOAuth2Request().getScope();
 //        User byUid = userRepository.findByUid(username);
         System.out.println("username = " + username);
-        model.addAttribute(username);
+        model.addAttribute("username",username);
         return "index";
     }
 }

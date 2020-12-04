@@ -27,10 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().headers().frameOptions().disable()
                 .and()
-                .authorizeRequests().antMatchers("/oauth/**","/oauth2/callback","/h2-console").permitAll()
+                .authorizeRequests()
+                .mvcMatchers("/oauth/**","/oauth2/callback","/h2-console","/login").permitAll()
+                .mvcMatchers("/admin/**").authenticated()
                 .and()
-                .formLogin()
-                .and()
-                .httpBasic();
+                .formLogin().loginPage("/login").permitAll();
     }
 }

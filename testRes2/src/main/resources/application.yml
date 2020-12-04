@@ -18,13 +18,14 @@ spring:
     properties.hibernate.hbm2ddl.auto: update
     showSql: true
 
+oauth2:
+  clientId: testClientId2
+  clientSecret: testSecret2
+  grantType: authorization_code
+  callback: http://localhost:8083/oauth2/callback
+  token: http://localhost:8081/oauth/token
 
 security:
   oauth2:
     jwt:
       signkey: 123@#$
-    client:
-      client-id: testClientId2
-      client-secret: testSecret2
-    resource:
-      token-info-uri: http://localhost:8081/oauth/check_token

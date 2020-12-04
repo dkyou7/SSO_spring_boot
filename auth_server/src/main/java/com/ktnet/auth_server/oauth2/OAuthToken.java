@@ -1,4 +1,4 @@
-package com.ktnet.auth_server.auth;
+package com.ktnet.auth_server.oauth2;
 
 import lombok.Getter;
 import lombok.Setter;

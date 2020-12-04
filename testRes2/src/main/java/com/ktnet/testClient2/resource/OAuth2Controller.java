@@ -1,19 +1,19 @@
-package com.ktnet.auth_server.auth;
+package com.ktnet.testClient2.resource;
 
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/oauth2")
 public class OAuth2Controller {
@@ -38,7 +38,7 @@ public class OAuth2Controller {
     private final RestTemplate restTemplate;
 
     @GetMapping(value = "/callback")
-    public OAuthToken callbackSocial(@RequestParam String code) {
+    public String callbackSocial(@RequestParam String code) {
 
         String credentials = clientId + ":" + secret;
         String encodedCredentials = new String(Base64.encodeBase64(credentials.getBytes()));
@@ -54,7 +54,9 @@ public class OAuth2Controller {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
         ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, request, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
-            return gson.fromJson(response.getBody(), OAuthToken.class);
+            OAuthToken oAuthToken = gson.fromJson(response.getBody(), OAuthToken.class);
+            String access_token = oAuthToken.getAccess_token();
+            return "redirect:/v1/api/member?access_token="+ access_token;
         }
         return null;
     }

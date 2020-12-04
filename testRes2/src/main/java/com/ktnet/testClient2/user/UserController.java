@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,7 @@ import java.util.Set;
 
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping(value = "/v1")
 public class UserController {
 
@@ -37,11 +39,14 @@ public class UserController {
         return "succes";
     }
 
-    @PreAuthorize("#oauth2.hasScope('read')")
-    @RequestMapping("/api/member")
-    public User member(@AuthenticationPrincipal OAuth2Authentication authentication) {
+    //    @PreAuthorize("#oauth2.hasScope('read')")
+    @GetMapping("/api/member")
+    public String member(@AuthenticationPrincipal OAuth2Authentication authentication, Model model) {
         String username = authentication.getUserAuthentication().getPrincipal().toString();
-        Set<String> scopes = authentication.getOAuth2Request().getScope();
-        return userRepository.findByUid(username);
+//        Set<String> scopes = authentication.getOAuth2Request().getScope();
+//        User byUid = userRepository.findByUid(username);
+        System.out.println("username = " + username);
+        model.addAttribute("username",username);
+        return "index";
     }
 }

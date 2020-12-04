@@ -31,6 +31,7 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/**").access("#oauth2.hasScope('read')")
                 .anyRequest().anonymous();
+
     }
 
     @Bean

@@ -1,11 +1,8 @@
 package com.ktnet.testClient2.resource;
 
-import lombok.Getter;
+import lombok.Data;
 
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 public class OAuthToken {
     private String access_token;
     private String token_type;

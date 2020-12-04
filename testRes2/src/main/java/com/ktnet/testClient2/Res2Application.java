@@ -1,15 +1,7 @@
 package com.ktnet.testClient2;
 
-import com.ktnet.testClient2.resource.JwtFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Collections;
 
 @SpringBootApplication
 public class Res2Application {
