@@ -22,6 +22,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User findByUid(String uid) {
+        return userRepository.findByUid(uid);
+    }
+
 //    @Transactional
 //    public void createDummy() {
 //        User user1 = User.builder().age(21).name("user1").role(Role.USER).userStatus(UserStatus.ACTIVE).build();

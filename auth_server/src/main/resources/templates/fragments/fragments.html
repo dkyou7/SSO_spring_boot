@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav mr-auto">
         <!--<a class="nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>-->
-            <a class="nav-link text-white" th:href="@{/userManage}" sec:authorize="hasRole('ROLE_ADMIN')">사용자관리<span class="sr-only">(current)</span></a>
+            <a class="nav-link text-white" th:href="@{/user-manage-home}" sec:authorize="hasRole('ROLE_ADMIN')">사용자관리<span class="sr-only">(current)</span></a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">권한관리</a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">접속권한관리</a>
             <a class="nav-link text-white disabled" href="#" sec:authorize="hasRole('ROLE_ADMIN')">클라이언트관리</a>
@@ -119,8 +119,8 @@
 
 <!--list-group fragment-->
 <div th:fragment="user-manage-menu (currentMenu)" class="list-group">
-    <a class="list-group-item list-group-item-action disabled" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/userManage}">사용자관리</a>
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'}? active" href="#" th:href="@{/userManage}">리스트 조회</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'home'}? active" href="#" th:href="@{/user-manage-home}">사용자관리</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'users'}? active" href="#" th:href="@{/users}">리스트 조회</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active" href="#" th:href="@{/settings/zones}">활동 지역</a>

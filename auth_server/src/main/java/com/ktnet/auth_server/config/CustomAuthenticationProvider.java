@@ -25,7 +25,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        User user = userJpaRepo.findByUid(name).orElseThrow(() -> new UsernameNotFoundException("user is not exists"));
+//        User user = userJpaRepo.findByUid(name).orElseThrow(() -> new UsernameNotFoundException("user is not exists"));
+        User user = userJpaRepo.findByUid(name);
 
         if (!passwordEncoder.matches(password, user.getPassword()))
             throw new BadCredentialsException("password is not valid");
