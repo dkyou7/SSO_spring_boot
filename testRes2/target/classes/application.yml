@@ -29,3 +29,8 @@ security:
   oauth2:
     jwt:
       signkey: 123@#$
+    client:
+      client-id: testClientId2
+      client-secret: testSecret2
+    resource:
+      token-info-uri: http://localhost:8081/oauth/check_token

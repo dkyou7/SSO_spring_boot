@@ -22,10 +22,10 @@ spring:
       settings:
         web-allow-others: true
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test
+    url: jdbc:h2:tcp://localhost/~/SSO_spring_boot
     driver-class-name: org.h2.Driver
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: none
+    properties.hibernate.hbm2ddl.auto: update
     showSql: true
