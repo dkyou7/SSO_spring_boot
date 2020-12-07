@@ -1,8 +1,8 @@
 server:
   port: 8083
-
-
 spring:
+  profiles:
+    active: local
   h2:
     console:
       enabled: true
@@ -15,7 +15,7 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: update
+    properties.hibernate.hbm2ddl.auto: create
     showSql: true
 
 oauth2:
@@ -29,3 +29,8 @@ security:
   oauth2:
     jwt:
       signkey: 123@#$
+    client:
+      client-id: testClientId2
+      client-secret: testSecret2
+    resource:
+      token-info-uri: http://localhost:8081/oauth/check_token

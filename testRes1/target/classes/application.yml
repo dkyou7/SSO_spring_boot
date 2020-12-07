@@ -1,8 +1,8 @@
 server:
   port: 8080
-
-
 spring:
+  profiles:
+    active: local
   h2:
     console:
       enabled: true
@@ -15,7 +15,7 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: update
+    properties.hibernate.hbm2ddl.auto: create
     showSql: true
 
 oauth2:
