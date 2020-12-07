@@ -1,4 +1,4 @@
-package com.ktnet.testClient2.resource;
+package com.ktnet.testClient2.oauth2;
 
 import lombok.Data;
 

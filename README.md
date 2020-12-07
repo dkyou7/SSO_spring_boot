@@ -1,9 +1,9 @@
 # config
 
 - 인증 요청
-http://localhost:8081/oauth/authorize?client_id=testClientId&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=read
 http://localhost:8081/oauth/authorize?client_id=testClientId1&redirect_uri=http://localhost:8080/oauth2/callback&response_type=code&scope=read
 http://localhost:8081/oauth/authorize?client_id=testClientId2&redirect_uri=http://localhost:8083/oauth2/callback&response_type=code&scope=read
+http://localhost:8081/oauth/authorize?client_id=testClientId&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=read
 - DB insert
 - testClientId1:testSecret1
 insert into oauth_client_details(client_id, resource_ids,client_secret,scope,authorized_grant_types,web_server_redirect_uri,authorities,access_token_validity,refresh_token_validity,additional_information,autoapprove)

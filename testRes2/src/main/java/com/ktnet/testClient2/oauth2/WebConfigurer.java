@@ -1,4 +1,4 @@
-package com.ktnet.testClient1.oauth2;
+package com.ktnet.testClient2.oauth2;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;

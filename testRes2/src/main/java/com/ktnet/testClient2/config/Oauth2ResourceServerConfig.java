@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -24,26 +23,14 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         http.headers().frameOptions().disable();
         http
                 .authorizeRequests()
-//                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
-                .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/**").access("#oauth2.hasScope('read')")
-                .anyRequest().anonymous();
-
+                .antMatchers("/","/oauth2/**").permitAll()
+                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
+                .anyRequest().authenticated();
     }
 
     @Bean
     public TokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
-    }
-
-    @Override
-    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.tokenStore(tokenStore());
-    }
-
-    @Bean
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
     }
 
     @Bean

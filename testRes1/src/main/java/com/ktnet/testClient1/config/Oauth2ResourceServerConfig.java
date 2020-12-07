@@ -27,11 +27,9 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         http.headers().frameOptions().disable();
         http
                 .authorizeRequests()
-//                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
-                .antMatchers("/oauth2/**").permitAll()
-                .antMatchers("/**").access("#oauth2.hasScope('read')")
-                .anyRequest().anonymous();
-
+                .antMatchers("/","/oauth2/**").permitAll()
+                .antMatchers("/v1/users").access("#oauth2.hasScope('read')")
+                .anyRequest().authenticated();
     }
 
     @Bean
@@ -42,11 +40,6 @@ public class Oauth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.tokenStore(tokenStore());
-    }
-
-    @Bean
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
     }
 
     @Bean

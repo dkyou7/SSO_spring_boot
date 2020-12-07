@@ -22,39 +22,10 @@ spring:
       settings:
         web-allow-others: true
   datasource:
-    hikari:
-      trade:
-        jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.142)(PORT=12533))(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.144)(PORT=12533))(CONNECT_DATA=(SERVICE_NAME=BOA)))
-        username: trade
-        password: trade_dev
-        driver-class-name: oracle.jdbc.OracleDriver
-
-      sso:
-        jdbc-url: jdbc:oracle:thin:@(DESCRIPTION=(LOAD_BALANCE=off)(FAILOVER=on)(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.142)(PORT=12533))(ADDRESS=(PROTOCOL=TCP)(HOST=120.143.250.144)(PORT=12533))(CONNECT_DATA=(SERVICE_NAME=BOA)))
-        username: sso
-        password: sso_dev
-        driver-class-name: oracle.jdbc.OracleDriver
-
-
-
-    url: jdbc:h2:tcp://localhost/~/test
+    url: jdbc:h2:tcp://localhost/~/SSO_spring_boot
     driver-class-name: org.h2.Driver
     username: sa
   jpa:
-    hibernate:
-      ddl-auto: none
-      # show_sql: true
-      format_sql: true
-      dialect: org.hibernate.dialect.H2Dialect
-
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-
-logging:
-  level:
-    org.hibernate.SQL: debug
-
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: none
+    properties.hibernate.hbm2ddl.auto: update
     showSql: true
