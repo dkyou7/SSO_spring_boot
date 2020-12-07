@@ -1,7 +1,5 @@
 package com.ktnet.auth_server.user;
 
-import com.ktnet.auth_server.account.Account;
-import com.ktnet.auth_server.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +13,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    private final AccountRepository accountRepository;
 
     public List<User> findAll() {
         return userRepository.findAll();

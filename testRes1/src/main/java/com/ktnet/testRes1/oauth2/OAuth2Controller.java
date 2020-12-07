@@ -56,7 +56,7 @@ public class OAuth2Controller {
         if (response.getStatusCode() == HttpStatus.OK) {
             OAuthToken oAuthToken = gson.fromJson(response.getBody(), OAuthToken.class);
             String access_token = oAuthToken.getAccess_token();
-            return "redirect:/v1/users?access_token="+ access_token;
+            return "redirect:/v1/success?access_token="+ access_token;
         }
         return null;
     }
