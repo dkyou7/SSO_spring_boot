@@ -58,6 +58,9 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 //    }
 
     /**
+     * 인증, 토큰 엔드포인트, 토큰 서비스를 정의할 수 있다.
+     * tokenStore, userDetailsService 등 객체를 빈으로 가져와 설정에 등록해주고 있는데, 이 빈들은 뒤에 나올
+     * SecurityConfig 에서 등록해주게 될 것이다.
      * 토큰 발급 방식을 JWT 토큰 방식으로 변경한다. 이렇게 하면 토큰 저장하는 DB Table은 필요가 없다.
      */
     @Override
@@ -66,16 +69,13 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         endpoints.accessTokenConverter(jwtAccessTokenConverter()).userDetailsService(userDetailService);
     }
 
-    @Value("${security.oauth2.jwt.signkey}")
-    private String signKey;
-
     /**
      * jwt converter를 등록
      */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(signKey);
+        converter.setSigningKey("KAS");
         return converter;
     }
 }

@@ -36,6 +36,7 @@ public class UserController {
     @GetMapping("/success")
     public String member(@AuthenticationPrincipal OAuth2Authentication authentication, Model model) {
         String username = authentication.getUserAuthentication().getPrincipal().toString();
+        String password = authentication.getCredentials().toString();
 //        Set<String> scopes = authentication.getOAuth2Request().getScope();
 //        User byUid = userRepository.findByUid(username);
         model.addAttribute("username",username);
