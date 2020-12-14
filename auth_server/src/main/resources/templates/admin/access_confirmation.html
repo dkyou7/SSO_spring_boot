@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/fragments.html :: fragment-header"></head>
+<body class="bg-light">
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>KTNET</h2>
+  </div>
+    <div th:if="${param.error}" class="alert alert-danger btn-close" role="alert">
+      <p>이메일(또는 닉네임)과 패스워드가 정확하지 않습니다.</p>
+      <p>또는 확인되지 않은 이메일을 사용했습니다. 이메일을 확인해 주세요.</p>
+      <p>
+        확인 후 다시 입력하시거나, <a href="#" th:href="@{/find-passsword}">패스워드 찾기</a>를 이용하세요.
+      </p>
+    </div>
+    <div class="row justify-content-center">
+      <h2>Please Confirm</h2>
+    </div>
+    <div class="row justify-content-center">
+      <p><span th:text="${client}"></span>가 귀하의 계정에 접근하는 것을 허용하시겠습니까?</p>
+    </div>
+    <div class="row justify-content-center">
+      <p>접근 권한 : <span th:text="${auth_request}"></span></p>
+    </div>
+    <div class="row justify-content-center">
+      <form id="confirmationForm" name="confirmationForm" th:action="@{/oauth/authorize}" method="post">
+        <input name="user_oauth_approval" value="true" type="hidden"/>
+        <label><input name="authorize" value="Authorize" type="submit"></label>
+      </form>
+      <form id="denialForm" name="denialForm" th:action="@{/oauth/authorize}" method="post">
+        <input name="user_oauth_approval" value="false" type="hidden"/>
+        <label><input name="deny" value="Deny" type="submit"></label>
+      </form>
+    </div>
+<div th:replace="fragments/fragments.html :: fragment-footer"></div>
+<div th:replace="fragments/fragments.html :: form-validation"></div>
+</body>
+</html>
