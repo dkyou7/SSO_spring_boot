@@ -1,4 +1,4 @@
-package com.ktnet.auth_server.admin;
+package com.ktnet.auth_server.admin.manage_user;
 
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin/mu")
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +21,7 @@ public class UserController {
      */
     @GetMapping("/user-manage-home")
     public String disp_users_manage(Model model){
-        return "admin/user-manage-home";
+        return "admin/manage_user/user-manage-home";
     }
     /**
      * 사용자 전체 조회
@@ -27,7 +29,7 @@ public class UserController {
     @GetMapping("/users")
     public String find_all_users(Model model){
         model.addAttribute("users",userService.findAll());
-        return "admin/users";
+        return "admin/manage_user/users";
     }
 
     @GetMapping("/user/{uid}")

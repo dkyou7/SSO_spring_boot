@@ -1,7 +1,10 @@
 package com.ktnet.auth_server.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +14,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableAutoConfiguration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomAuthenticationProvider authenticationProvider;
@@ -32,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .mvcMatchers("/oauth/**","/oauth2/callback","/h2-console","/login").permitAll()
-                .mvcMatchers("/admin/**").hasRole("ADMIN")
+                .mvcMatchers("/admin/**","/users/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll();

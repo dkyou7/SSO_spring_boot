@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class AdminController {
         private String password;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/")
     public String dispLoginDev(Model model){
         model.addAttribute(new LoginForm());
         return "admin/index";

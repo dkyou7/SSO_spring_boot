@@ -27,7 +27,7 @@ class UserRepositoryTest {
                 .uid("test@naver.com")
                 .password(passwordEncoder.encode("123"))
                 .name("dkyou7")
-                .roles(Collections.singletonList("ROLE_ADMIN"))
+                .roles(Collections.singletonList("ROLE_USER"))
                 .build();
         User adminUser = User.builder()
                 .uid("admin@naver.com")
