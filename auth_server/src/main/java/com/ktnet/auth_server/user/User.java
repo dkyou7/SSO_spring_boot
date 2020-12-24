@@ -89,4 +89,8 @@ public class User implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void changePW(String new_password) {
+        this.password = new_password;
+    }
 }

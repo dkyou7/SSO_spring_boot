@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -47,6 +48,15 @@ public class UserController {
         User byUid = userService.findByUid(uid);
         model.addAttribute("user",byUid);
         return "admin/manage_user/profile";
+    }
+
+    @GetMapping("/resetPW/{uid}")
+    public String user_passwd_reset_by_userid(@PathVariable("uid") String uid, RedirectAttributes attributes, Model model){
+        String new_password = userService.resetPW(uid);
+        User byUid = userService.findByUid(uid);
+        model.addAttribute("user",byUid);
+        attributes.addFlashAttribute("newPW","새로운 비밀번호 : " + new_password);
+        return "redirect:/admin/mu/user/"+uid;
     }
 
     @GetMapping("/sign-up")

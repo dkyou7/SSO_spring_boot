@@ -2,6 +2,7 @@ package com.ktnet.auth_server.user;
 
 import com.ktnet.auth_server.admin.manage_user.SignUpForm;
 import lombok.RequiredArgsConstructor;
+import org.bouncycastle.crypto.prng.RandomGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @Service
 @Transactional
@@ -60,5 +63,13 @@ public class UserService {
                 .build();
         User newUser = userRepository.save(user);
         return newUser;
+    }
+
+    public String resetPW(String uid) {
+        User user = userRepository.findByUid(uid);
+        Random random = new Random();
+        String new_password = random.nextInt(999999)+"";
+        user.changePW(passwordEncoder.encode(new_password));
+        return new_password;
     }
 }
