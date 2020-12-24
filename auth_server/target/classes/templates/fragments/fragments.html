@@ -18,7 +18,7 @@
 
 <!--navbar fragment-->
 <nav th:fragment="main-navigation" class="navbar navbar-expand-lg navbar-light bg-info">
-    <a class="navbar-brand text-white" th:href="@{/admin}">KTNET SSO</a>
+    <a class="navbar-brand text-white" th:href="@{/}">KTNET SSO</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -118,7 +118,7 @@
 
 <!--사용자 관리 fragment-->
 <div th:fragment="user-manage-menu (currentMenu)" class="list-group">
-    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'home'}? active" href="#" th:href="@{/admin/mu/user-manage-home}">사용자관리</a>
+    <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'home'}? active" href="#" th:href="@{/admin/mu/user-manage-home}">사용자 관리</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'users'}? active" href="#" th:href="@{/admin/mu/users}">리스트 조회</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'notifications'}? active" href="#" th:href="@{/settings/notifications}">알림</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active" href="#" th:href="@{/settings/tags}">관심 주제</a>

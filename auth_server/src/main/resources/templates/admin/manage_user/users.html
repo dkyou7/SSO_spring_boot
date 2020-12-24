@@ -13,6 +13,7 @@
             <div class="col-2">
                 <div th:replace="fragments/fragments.html :: user-manage-menu(currentMenu='users')"></div>
             </div>
+            <!-- content start -->
             <div class="col-8">
                 <h2>사용자 리스트</h2>
                 <table class="table mt-5">
@@ -27,11 +28,13 @@
                     <tr th:each="user : ${users}">
                         <td scope="row" th:text="${user.uid}">1</td>
                         <td scope="row" th:text="${user.name}">1</td>
-                        <td scope="row"><a th:href="@{'/user/'+${user.uid}}" th:text="자세히">1</a></td>
+                        <td scope="row"><a th:href="@{'/admin/mu/user/'+${user.uid}}" th:text="자세히">1</a></td>
                     </tr>
                     </tbody>
                 </table>
+                <a class="btn btn-outline-primary" th:href="@{/admin/mu/sign-up}">회원가입</a>
             </div>
+            <!-- content end -->
         </div>
 
     </div>
