@@ -29,4 +29,8 @@ public class Client {
     private String refresh_token_validity;      // 50000
     private String additional_information;      // null
     private String autoapprove;                 // null
+
+    public void updateSecret(String encodedSecret) {
+        this.client_secret = encodedSecret;
+    }
 }

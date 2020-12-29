@@ -35,6 +35,8 @@ public class User implements UserDetails {
     @Column(length = 100)
     private String provider;
 
+    private boolean dormant;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();

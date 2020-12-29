@@ -1,17 +1,30 @@
 package com.ktnet.testRes1.oauth2;
 
 import com.google.gson.Gson;
+import com.ktnet.testRes1.login.LoginForm;
+import com.ktnet.testRes1.login.LoginService;
+import com.ktnet.testRes1.sso.SSOService;
+import com.ktnet.testRes1.user.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,6 +49,60 @@ public class OAuth2Controller {
     private final Gson gson;
 
     private final RestTemplate restTemplate;
+    private final OAuth2Service oAuth2Service;
+    private final SSOService ssoService;
+    private final LoginService loginService;
+
+    @PostMapping("/login/Login_create.do")
+    public String createLogin(HttpServletRequest request, HttpServletResponse response, RedirectAttributes attributes,
+                              LoginForm loginForm, Model model, SessionStatus sessionStatus){
+        // 1. 아이디 대문자 처리
+        loginForm.setUsername(loginForm.getUsertype().toUpperCase());
+
+        // 2. 아이디 저장버튼 클릭했다면 쿠키를 아이디에 저장하자.
+        loginService.insert_id_to_cookie(request,response,loginForm);
+
+        // 3. 통합회원인지 아니면 SSO 요청을 보내야 하는지
+        if("USER".equals(loginForm.getUsertype())){
+            // 인증서 기반 로그인인가? 아이디 패스워드 기반 로그인인가
+            loginService.isCertMember(loginForm);
+
+            // 4. ID / PW 비교
+            User loginedUser = loginService.login(loginForm);
+            if(loginedUser == null){
+                attributes.addFlashAttribute("message","정확한 ID/PW를 입력해주세요.");
+                return "redirect:/";
+            }
+
+            // 5. 휴면계정체크
+            if(loginedUser.isDormant()){
+                // TODO : 휴면 계정인데 로그인 한 경우이므로, 로직 분석해서 휴면 해제하도록 하자.
+            }
+            // 6. 미납업체체크
+
+        }else if("NOT_USER".equals(loginForm.getUsertype())){
+                // 통합회원이 아닌경우, TradeSign으로 요청을 보낸다.
+        }
+        return null;
+    }
+
+//    @GetMapping("/common/login/Login_sso.do")
+//    public String createSSO(HttpServletRequest request, HttpServletResponse, Map<String, Object> commandMap, Model model){
+//        ssoService.createSSO(request);
+//        return null;
+//    }
+
+    @GetMapping("/login")
+    public String KAS_login(HttpServletRequest request){
+        // ssoprincipal session이 있지만, ss 에서는 로그인이 안되었을 경우
+        if(oAuth2Service.isLoginSSO(request)){
+            if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() == null){
+                // sso에도 로그인 요청을 보내주자.
+                return "redirect:/common/login/Login_sso.do";
+            }
+        }
+        return "redirect:/";
+    }
 
     @GetMapping(value = "/callback")
     public String callbackSocial(@RequestParam String code) {

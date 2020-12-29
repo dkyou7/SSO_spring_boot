@@ -9,13 +9,14 @@ oauth2:
   callback: http://localhost:8081/oauth2/callback
   token: http://localhost:8081/oauth/token
 
-
 security:
   oauth2:
     jwt:
       signkey: 123@#$
 
 spring:
+  thymeleaf:
+    cache: false
   h2:
     console:
       enabled: true

@@ -50,6 +50,9 @@ public class UserController {
         return "admin/manage_user/profile";
     }
 
+    /**
+     * 비밀번호 초기화
+     */
     @GetMapping("/resetPW/{uid}")
     public String user_passwd_reset_by_userid(@PathVariable("uid") String uid, RedirectAttributes attributes, Model model){
         String new_password = userService.resetPW(uid);

@@ -18,19 +18,20 @@
                 <table class="table mt-5">
                     <thead>
                     <tr>
-                        <th scope="col" th:text="아이디">#</th>
-                        <th scope="col" th:text="이름">#</th>
-                        <th scope="col" th:text="상세보기">#</th>
+                        <th scope="col">Client ID</th>
+                        <th scope="col">Redirect URI</th>
+                        <th scope="col">Scope</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="client : ${clients}">
                         <td scope="row" th:text="${client.client_id}">1</td>
-                        <td scope="row" th:text="${client.access_token_validity}">1</td>
-                        <td scope="row" th:text="${client.access_token_validity}">1</td>
+                        <td scope="row" th:text="${client.web_server_redirect_uri}">1</td>
+                        <td scope="row" th:text="${client.scope}">1</td>
                     </tr>
                     </tbody>
                 </table>
+                <a class="btn btn-outline-primary" th:href="@{/admin/mc/sign-up}">클라이언트 등록</a>
             </div>
         </div>
 
