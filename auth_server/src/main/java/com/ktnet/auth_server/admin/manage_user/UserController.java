@@ -2,7 +2,6 @@ package com.ktnet.auth_server.admin.manage_user;
 
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
