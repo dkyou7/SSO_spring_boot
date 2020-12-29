@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragments.html :: fragment-header"></head>
+<body class="bg-light">
+<div th:replace="fragments/fragments.html :: main-navigation"></div>
+<div class="container">
+    <div class="row mt-5 justify-content-center">
+        <div class="col-2">
+            <div th:replace="fragments/fragments.html :: user-manage-menu(currentMenu='users')"></div>
+        </div>
+        <div class="col-8">
+            <div th:if="${message}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                <span th:text="${message}">메시지</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row">
+                <h2 class="col-sm-12" th:text="${user.name} + '님의 계정관리 매뉴입니다.'">test</h2>
+            </div>
+            <div class="row mt-3">
+                <p>이메일 : <span th:text="${user.uid}"></span></p>
+            </div>
+            <div th:if="${newPW}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
+                <span th:text="${newPW}">메시지</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row">
+                <a th:href="@{'/admin/mu/resetPW/'+${user.uid}}" class="btn btn-outline-danger mr-3">비밀번호 초기화</a>
+                <a th:href="@{/admin/mu/users}" th:text="목록으로" class="btn btn-outline-primary"></a>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/fragments.html :: fragment-footer"></div>
+    <div th:replace="fragments/fragments.html :: form-validation"></div>
+</div>
+</body>
+</html>

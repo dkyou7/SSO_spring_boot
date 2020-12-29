@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/fragments.html :: fragment-header"></head>
+<body class="bg-light">
+    <div th:replace="fragments/fragments.html :: main-navigation"></div>
+    <div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
+        서비스를 이용하기 위해 <a th:href="@{/check-email}" class="alert-link">계정 인증 이메일을 확인</a>하세요.
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-2">
+                <div th:replace="fragments/fragments.html :: user-manage-menu(currentMenu='users')"></div>
+            </div>
+            <!-- content start -->
+            <div class="col-8">
+                <h2>사용자 리스트</h2>
+                <table class="table mt-5">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="아이디">#</th>
+                        <th scope="col" th:text="이름">#</th>
+                        <th scope="col" th:text="상세보기">#</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td scope="row" th:text="${user.uid}">1</td>
+                        <td scope="row" th:text="${user.name}">1</td>
+                        <td scope="row"><a th:href="@{'/admin/mu/user/'+${user.uid}}" th:text="자세히">1</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-outline-primary" th:href="@{/admin/mu/sign-up}">유저 등록</a>
+            </div>
+            <!-- content end -->
+        </div>
+
+    </div>
+    <div th:replace="fragments/fragments.html :: fragment-footer"></div>
+</body>
+</html>
