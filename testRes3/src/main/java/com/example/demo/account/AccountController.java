@@ -1,5 +1,6 @@
 package com.example.demo.account;
 
+import com.example.demo.sso.SsoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
+    private final SsoService ssoService;
     private final SignUpFormValidator signUpFormValidator;
 
     @InitBinder("signUpForm")
@@ -50,9 +52,20 @@ public class AccountController {
     public String home(@CurrentUser Account account, Model model){
         if(account != null){
             model.addAttribute(account);
+        }else{
             //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
+            Account byVid = accountService.findByVid("admin@naver.com");
+            boolean isSSO = ssoService.isSSO2("admin@naver.com");
+            if(loginLogic(isSSO,byVid)){
+                accountService.login(byVid);
+                return "redirect:/";
+            }
         }
 
         return "index";
+    }
+
+    private boolean loginLogic(boolean isSSO, Account account) {
+        return isSSO && account != null;
     }
 }

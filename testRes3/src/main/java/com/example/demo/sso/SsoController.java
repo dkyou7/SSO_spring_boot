@@ -35,8 +35,10 @@ public class SsoController {
         boolean authServerIsLogin = ssoService.isSSO2("admin@naver.com");
         if(authServerIsLogin){
             Account byVid = accountService.findByVid("admin@naver.com");
-            accountService.login(byVid);
-            return "로그인 성공!";
+            if(byVid!=null){
+                accountService.login(byVid);
+                return "로그인 성공!";
+            }
         }
         return "로그인 실패!";
     }
