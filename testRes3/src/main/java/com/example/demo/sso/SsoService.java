@@ -38,6 +38,31 @@ public class SsoService {
 
         return block;
     }
+    public String isSSO(String email){
+        // WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
+        String result = webClient.post().uri("/api/isSSO")
+                .bodyValue(email)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        if(result==null){
+            return null;
+        }
+        return result+"님, 안녕하세요";
+    }
+    public boolean isSSO2(String email){
+        WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
+        String result = webClient.post().uri("/api/isSSO2")
+                .bodyValue(email)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        log.info(result);
+        if("Y".equals(result)){
+            return true;
+        }
+        return false;
+    }
 
 
     @Autowired

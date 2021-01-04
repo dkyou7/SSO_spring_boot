@@ -1,12 +1,17 @@
 package com.example.demo.account;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,6 +27,7 @@ public class AccountService implements UserDetailsService {
                 .nickname(signUpForm.getNickname())
                 .remember(signUpForm.isRemember())
                 .build();
+        account.updateVid("admin@naver.com");    // 글로벌 포탈을 vid로 가지도록
         accountRepository.save(account);
     }
 
@@ -33,5 +39,17 @@ public class AccountService implements UserDetailsService {
         }
 
         return new UserAccount(account);
+    }
+
+    public Account findByVid(String s) {
+        return accountRepository.findByVid(s);
+    }
+
+    public void login(Account account) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                new UserAccount(account),   // 현재 인증된 사용자 정보 참조
+                account.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        SecurityContextHolder.getContext().setAuthentication(token);
     }
 }

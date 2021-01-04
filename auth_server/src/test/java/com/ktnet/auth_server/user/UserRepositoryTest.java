@@ -24,16 +24,18 @@ class UserRepositoryTest {
     @Commit
     public void insertNewUser() {
         User build = User.builder()
-                .uid("test@naver.com")
+                .uid("dkyou7@naver.com")
                 .password(passwordEncoder.encode("123"))
                 .name("dkyou7")
                 .roles(Collections.singletonList("ROLE_USER"))
+                .isLogin(false)
                 .build();
         User adminUser = User.builder()
                 .uid("admin@naver.com")
                 .password(passwordEncoder.encode("123"))
                 .name("유동관")
                 .roles(Collections.singletonList("ROLE_ADMIN"))
+                .isLogin(true)
                 .build();
         userJpaRepo.save(build);
         userJpaRepo.save(adminUser);

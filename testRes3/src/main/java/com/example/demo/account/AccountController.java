@@ -17,7 +17,6 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
-    private final AccountRepository accountRepository;
     private final SignUpFormValidator signUpFormValidator;
 
     @InitBinder("signUpForm")

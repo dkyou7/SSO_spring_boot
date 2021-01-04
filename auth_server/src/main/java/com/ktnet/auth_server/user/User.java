@@ -39,6 +39,8 @@ public class User implements Serializable, UserDetails {
 
     private int age;
 
+    private boolean isLogin;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
