@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .mvcMatchers("/oauth/**","/oauth2/callback","/h2-console","/login").permitAll()
+                .mvcMatchers("/api/**").permitAll()
                 .mvcMatchers("/admin/**","/users/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()

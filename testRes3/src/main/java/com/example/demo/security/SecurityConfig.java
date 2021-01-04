@@ -18,6 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/log-in","/go_login","/loginSuccess","/sign-up").permitAll()
+                .mvcMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
 
         http.formLogin()
