@@ -36,18 +36,16 @@ public class UserService {
 
     public User processNewAccount(SignUpForm signUpForm) {
         User newUser = buildAccount(signUpForm);  // 계정 만들기
-        // newAccount.generateEmailCheckToken();   // 토큰 생성하기
-        // sendSignUpConfirmEmail(newAccount); // 가입 확인 이메일 보내기
+        userRepository.save(newUser);             // 저장
         return newUser;
     }
 
     private User buildAccount(@Valid SignUpForm signUpForm) {
-        User user = User.builder().name(signUpForm.getNickname())
+        return User.builder()
+                .name(signUpForm.getNickname())
                 .uid(signUpForm.getEmail())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
-        User newUser = userRepository.save(user);
-        return newUser;
     }
 
     public User processNewAccountAdmin(SignUpForm signUpForm) {

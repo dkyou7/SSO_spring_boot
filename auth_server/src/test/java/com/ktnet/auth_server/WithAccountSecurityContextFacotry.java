@@ -29,7 +29,8 @@ public class WithAccountSecurityContextFacotry implements WithSecurityContextFac
         if(nickname.equals("admin_test_account")){
             accountService.processNewAccountAdmin(signUpForm);
         }else{
-            accountService.processNewAccount(signUpForm);
+            User user = accountService.processNewAccount(signUpForm);
+            accountService.save(user);
         }
 
         UserDetails principal = customUserDetailService.loadUserByUsername(signUpForm.getEmail());

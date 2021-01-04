@@ -1,6 +1,7 @@
 package com.ktnet.auth_server.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ktnet.auth_server.gid.Gid;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,6 +41,10 @@ public class User implements Serializable, UserDetails {
     private int age;
 
     private String isLogin;
+
+    @ManyToOne
+    @JoinColumn(name = "gid_id")
+    private Gid gid;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
