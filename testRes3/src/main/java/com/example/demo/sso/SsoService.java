@@ -1,5 +1,6 @@
 package com.example.demo.sso;
 
+import com.example.demo.account.Account;
 import com.example.demo.property.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,9 +51,15 @@ public class SsoService {
         }
         return result+"님, 안녕하세요";
     }
+
+    /**
+     * 로그인 되어있다면 Y, 안되어있다면 N
+     * @param email
+     * @return
+     */
     public boolean isSSO2(String email){
         WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
-        String result = webClient.post().uri("/api/isSSO2")
+        String result = webClient.post().uri("/api/isLogin")
                 .bodyValue(email)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -64,25 +71,33 @@ public class SsoService {
         return false;
     }
 
-
-    @Autowired
-    WebClient.Builder webClientBuilder;
-
-    public String getSSOInfo(){
-        WebClient webClient = webClientBuilder.baseUrl(appProperties.getHost()).build();
-
-        Mono<String> helloResult = webClient.get().uri("/api/v1/hello")
+    /**
+     * SSO 로그인 request
+     * 인증서버 VID에게 로그인 요청 전송
+     * @param account
+     */
+    public void ssoLogin(Account account) {
+        WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
+        String result = webClient.post().uri("/api/login")
+                .bodyValue(account.getVid())
                 .retrieve()
-                .bodyToMono(String.class);
-        helloResult.subscribe(log::info);
+                .bodyToMono(String.class)
+                .block();
+        log.info(result);
+    }
 
-        Mono<String> isSSO = webClient
-                .post()
-                .uri("/api/v1/isSSO")
-                .body(Mono.just("admin@naver.com"),String.class)
+    /**
+     * SSO 로그아웃 request
+     * 인증서버 VID에게 로그아웃 요청 전송
+     * @param account
+     */
+    public void ssoLogout(Account account) {
+        WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
+        String result = webClient.post().uri("/api/logout")
+                .bodyValue(account.getVid())
                 .retrieve()
-                .bodyToMono(String.class);
-        isSSO.subscribe(log::info);
-        return isSSO.block();
+                .bodyToMono(String.class)
+                .block();
+        log.info(result);
     }
 }

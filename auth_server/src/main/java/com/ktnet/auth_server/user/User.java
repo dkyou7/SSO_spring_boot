@@ -39,7 +39,7 @@ public class User implements Serializable, UserDetails {
 
     private int age;
 
-    private boolean isLogin;
+    private String isLogin;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -94,5 +94,13 @@ public class User implements Serializable, UserDetails {
 
     public void changePW(String new_password) {
         this.password = new_password;
+    }
+
+    public void logout() {
+        this.isLogin = "N";
+    }
+
+    public void login() {
+        this.isLogin = "Y";
     }
 }

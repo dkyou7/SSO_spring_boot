@@ -2,6 +2,9 @@ package com.example.demo.account;
 
 import com.example.demo.sso.SsoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -48,9 +53,16 @@ public class AccountController {
         return "log-in";
     }
 
+    @GetMapping("/log-out")
+    public String logout(){
+        return "redirect:/";
+    }
+
     @GetMapping("/")
     public String home(@CurrentUser Account account, Model model){
         if(account != null){
+            // 인증된 유저 객체가 존재한다면, sso login 처리하기
+            ssoService.ssoLogin(account);
             model.addAttribute(account);
         }else{
             //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
@@ -65,6 +77,12 @@ public class AccountController {
         return "index";
     }
 
+    /**
+     * SSO VID가 로그인 되어있고, 해당 VID로 등록된 유저가 존재하는 경우
+     * @param isSSO
+     * @param account
+     * @return true
+     */
     private boolean loginLogic(boolean isSSO, Account account) {
         return isSSO && account != null;
     }

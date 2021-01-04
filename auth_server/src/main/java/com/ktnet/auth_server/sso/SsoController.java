@@ -28,14 +28,41 @@ public class SsoController {
         User byUid = userService.findByUid(email);
         return byUid.getName();
     }
-    @PostMapping("/isSSO2")
+
+    // 로그인 되어있는지 확인하는 로직
+    @PostMapping("/isLogin")
     public String findUser2(@RequestBody String email){
         log.info(email);
         User byUid = userService.findByUid(email);
-        if(byUid.isLogin()){
+        if("Y".equals(byUid.getIsLogin())){
             return "Y";
         }else{
             return "N";
         }
+    }
+    @PostMapping("/login")
+    public String ssoLogin(@RequestBody String email){
+        log.info(email);
+        User byUid = userService.findByUid(email);
+        log.info("Auth Server에서의 로그인 유무 : " + byUid.getIsLogin());
+        userService.updateVidLogIn(byUid);
+        return "Y";
+//        if(!byUid.isLogin()){
+//            userService.updateVidLogIn(byUid);
+//            return "Y";
+//        }
+//        return "N";
+    }
+    @PostMapping("/logout")
+    public String ssoLogout(@RequestBody String email){
+        log.info(email);
+        User byUid = userService.findByUid(email);
+        userService.updateVidLogout(byUid);
+        return "Y";
+//        if(byUid != null){
+//            userService.updateVidLogout(byUid);
+//            return "Y";
+//        }
+//        return "N";
     }
 }

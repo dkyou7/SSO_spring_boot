@@ -72,4 +72,14 @@ public class UserService {
         user.changePW(passwordEncoder.encode(new_password));
         return new_password;
     }
+
+    public void updateVidLogout(User byUid) {
+        User user = userRepository.findByUid(byUid.getUid());
+        user.logout();
+    }
+
+    public void updateVidLogIn(User byUid) {
+        User user = userRepository.findByUid(byUid.getUid());
+        user.login();
+    }
 }

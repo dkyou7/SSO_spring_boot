@@ -1,5 +1,7 @@
 package com.example.demo.security;
 
+import com.example.demo.sso.SsoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,15 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CustomLogoutHandler customLogoutHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/log-in","/go_login","/loginSuccess","/sign-up").permitAll()
+                .antMatchers("/","/log-in","/log-out","/go_login","/loginSuccess","/sign-up").permitAll()
                 .mvcMatchers("/api/**").permitAll()
                 .anyRequest().authenticated();
 
@@ -27,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 .logoutUrl("/log-out")
-                .logoutSuccessUrl("/")
+                .addLogoutHandler(customLogoutHandler)
+                .logoutSuccessUrl("/log-out")
                 .permitAll();
     }
 
@@ -40,4 +47,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
 }

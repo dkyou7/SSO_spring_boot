@@ -1,5 +1,6 @@
 package com.example.demo.account;
 
+import com.example.demo.sso.SsoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +21,7 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SsoService ssoService;
 
     public void signUp(SignUpForm signUpForm) {
         Account account = Account.builder().username(signUpForm.getUsername())
@@ -37,7 +39,7 @@ public class AccountService implements UserDetailsService {
         if(account == null){
             throw new UsernameNotFoundException(username);
         }
-
+        ssoService.ssoLogin(account);
         return new UserAccount(account);
     }
 
