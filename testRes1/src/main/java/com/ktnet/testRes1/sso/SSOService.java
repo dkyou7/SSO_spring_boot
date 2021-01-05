@@ -3,17 +3,24 @@ package com.ktnet.testRes1.sso;
 import com.ktnet.testRes1.oauth2.ParameterValidator;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SSOService {
+
+    private final WebClient webClient = WebClient.builder()
+            .baseUrl("http://localhost:8081/api/v1")
+            .build();
 
     /**
      * 1. missing input 존재하는지 여부 체크
@@ -43,6 +50,16 @@ public class SSOService {
 
     public void createSSO(HttpServletRequest request) {
         SSORspData ssoRspData = this.ssoGetLoginData(request);
+
+    }
+
+    public void getUserInfo(String access_token) {
+        String block = webClient.post().uri("/userInfo")
+                .bodyValue(access_token)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        log.info(block);
 
     }
 }

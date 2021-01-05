@@ -1,5 +1,6 @@
 package com.ktnet.auth_server.admin.manage_user;
 
+import com.ktnet.auth_server.gid.Gid;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,5 +77,10 @@ public class UserController {
         }
         userService.processNewAccount(signUpForm);
         return "redirect:/admin/mu/users";
+    }
+    @GetMapping("/user/gids")
+    public Set<Gid> updateGidSet(String email){
+        Set<Gid> gidSet = userService.getGids(email);
+        return gidSet;
     }
 }

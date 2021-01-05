@@ -12,7 +12,11 @@ public class GidService {
 
     private final GidRepository gidRepository;
 
-    public void save(Gid gid){
-        gidRepository.save(gid);
+    public Gid findOrCreateNew(Gid gid){
+        Gid res = gidRepository.findByTitle(gid.getTitle());
+        if(res == null){
+            res = gidRepository.save(gid);
+        }
+        return res;
     }
 }

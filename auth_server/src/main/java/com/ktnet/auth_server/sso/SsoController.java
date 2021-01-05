@@ -1,25 +1,32 @@
 package com.ktnet.auth_server.sso;
 
+import com.ktnet.auth_server.account.Account;
+import com.ktnet.auth_server.federation.Federation;
+import com.ktnet.auth_server.federation.FederationRepository;
+import com.ktnet.auth_server.federation.FederationService;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class SsoController {
 
     private final UserService userService;
 
+    @GetMapping("/test")
+    public String apiTest_get(String testMsg){
+        return "api get test success";
+    }
+
     @PostMapping("/test")
     public String apiTest(@RequestBody String testMsg){
-        return "api test success";
+        return "api post test success";
     }
 
     @PostMapping("/isSSO")
@@ -64,5 +71,30 @@ public class SsoController {
 //            return "Y";
 //        }
 //        return "N";
+    }
+
+    @PostMapping("/userInfo")
+    public User getUserInfo(@RequestBody String email){
+        log.info(email);
+        User byUid = userService.findByUid(email);
+        return byUid;
+    }
+
+    private final ArticleRepository articleRepository;
+
+    @PostMapping("/article")
+    public ResponseEntity<Article> write(@RequestBody Article article){
+        Article save = articleRepository.save(article);
+        log.info("write: {}", article.toString());
+        return ResponseEntity.ok(article);
+    }
+
+    private final FederationService federationService;
+
+    @PostMapping("/user/federation")
+    public ResponseEntity<String> federation(@RequestBody Account account){
+        Federation res = federationService.findOrCreateNew(account);
+        log.info("create federation : {}", res.toString());
+        return ResponseEntity.ok(res.toString());
     }
 }

@@ -1,6 +1,7 @@
 package com.ktnet.auth_server.user;
 
 import com.ktnet.auth_server.admin.manage_user.SignUpForm;
+import com.ktnet.auth_server.gid.Gid;
 import lombok.RequiredArgsConstructor;
 import org.bouncycastle.crypto.prng.RandomGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,9 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Service
@@ -79,5 +78,10 @@ public class UserService {
     public void updateVidLogIn(User byUid) {
         User user = userRepository.findByUid(byUid.getUid());
         user.login();
+    }
+
+    public Set<Gid> getGids(String email) {
+        User user = userRepository.findByUid(email);
+        return user.getGidSet();
     }
 }

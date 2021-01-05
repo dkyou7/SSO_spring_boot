@@ -18,6 +18,9 @@ public class Gid {
     @Column(name = "gid_id")
     private Long id;
 
-    @OneToMany(mappedBy = "gid")
-    private List<User> userList;
+    @Column(unique = true, nullable = false)
+    private String title;
+
+    private String uri;
+
 }

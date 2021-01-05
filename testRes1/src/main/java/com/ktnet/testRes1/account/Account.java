@@ -1,4 +1,4 @@
-package com.example.demo.account;
+package com.ktnet.testRes1.account;
 
 import lombok.*;
 
@@ -22,10 +22,4 @@ public class Account {
     private boolean remember;
 
     private String gid;
-
-    private String vid; // auth_server에 로그인 여부 확인해줄 아이디
-
-    public void updateVid(String s) {
-        this.vid = s;
-    }
 }
