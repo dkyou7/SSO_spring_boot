@@ -1,6 +1,6 @@
 package com.ktnet.testRes1.account;
 
-import com.example.demo.sso.SsoService;
+import com.ktnet.testRes1.sso.SSOService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +21,7 @@ public class AccountService implements UserDetailsService {
 
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SsoService ssoService;
+    private final SSOService ssoService;
 
     public void signUp(SignUpForm signUpForm) {
         Account account = Account.builder().username(signUpForm.getUsername())

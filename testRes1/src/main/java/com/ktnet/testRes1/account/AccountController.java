@@ -1,6 +1,6 @@
 package com.ktnet.testRes1.account;
 
-import com.example.demo.sso.SsoService;
+import com.ktnet.testRes1.sso.SSOService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
-    private final SsoService ssoService;
+    private final SSOService ssoService;
     private final SignUpFormValidator signUpFormValidator;
 
     @InitBinder("signUpForm")
@@ -53,24 +53,7 @@ public class AccountController {
         return "redirect:/";
     }
 
-    @GetMapping("/")
-    public String home(@CurrentUser Account account, Model model){
-        if(account != null){
-            // 인증된 유저 객체가 존재한다면, sso login 처리하기
-            ssoService.ssoLogin(account);
-            model.addAttribute(account);
-        }else{
-            //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
-            Account byVid = accountService.findByVid("admin@naver.com");
-            boolean isSSO = ssoService.isSSO2("admin@naver.com");
-            if(loginLogic(isSSO,byVid)){
-                accountService.login(byVid);
-                return "redirect:/";
-            }
-        }
 
-        return "index";
-    }
 
     /**
      * SSO VID가 로그인 되어있고, 해당 VID로 등록된 유저가 존재하는 경우

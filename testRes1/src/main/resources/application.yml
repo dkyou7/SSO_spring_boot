@@ -1,6 +1,13 @@
 server:
   port: 8080
 spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false
   profiles:
     active: local
   h2:
@@ -34,3 +41,10 @@ security:
       client-secret: testSecret1
     resource:
       token-info-uri: http://localhost:8081/oauth/check_token
+sso:
+  clientId: testClientId1
+  clientSecret: testSecret
+  grantType: authorization_code
+  callback: http://localhost:8080/callback
+  token: http://localhost:8081/oauth/token
+  host: http://localhost:8081

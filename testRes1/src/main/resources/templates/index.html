@@ -168,6 +168,22 @@ body {
         </p>
     </main>
 
+    <div class="container">
+        <p class="box alert alert-info mb-5" th:if="${message}" th:text="${message}"></p>
+        <div class="box" th:if="${account != null}">
+            <h2 class="text-muted mb-4" th:text="${account?.nickname}+'님, 안녕하세요!'"></h2>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-info" style="width:auto;">log out</button>
+            </form>
+        </div>
+        <div class="box" th:if="${account == null}">
+            <h2 class="text-muted mt-5">Rest Client 1</h2>
+            <p><small class="text-muted mb-4">Covered by, dkyou</small></p>
+            <a th:href="@{/sign-up}" class="btn btn-lg btn-secondary">sign up</a>
+            <a th:href="@{/log-in}" class="btn btn-lg btn-secondary">log in</a>
+        </div>
+    </div>
+
     <footer class="mastfoot mt-auto">
         <div class="inner">
             <p><a href="https://www.ktnetplus.com/">KTNET</a></p>
