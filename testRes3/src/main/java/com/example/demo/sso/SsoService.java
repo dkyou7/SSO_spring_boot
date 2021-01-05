@@ -4,8 +4,11 @@ import com.example.demo.account.Account;
 import com.example.demo.property.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
 import javax.transaction.Transactional;
 
 @Slf4j
@@ -88,5 +91,23 @@ public class SsoService {
                 .bodyToMono(String.class)
                 .block();
         log.info(result);
+    }
+
+    /**
+     * 인증서버로 federation 보내기
+     * @param account
+     */
+    public void federationRequest(Account account){
+        WebClient webClient = WebClient.create("http://localhost:8081/api/v1");
+        Mono<Account> mono = Mono.just(account); // Mono.just로 이미 존재하는 article 객체를 감쌈
+
+        String result = webClient.post()
+                .uri("/user/federation")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(mono, Account.class)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        System.out.println("result: "+ result);
     }
 }

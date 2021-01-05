@@ -51,8 +51,8 @@ public class UserController {
 //        User byUid = userRepository.findByUid(username);
         model.addAttribute("username",username);
 
+//        ssoService.federationRequest();
         ssoService.getUserInfo(access_token);
-
         return "index";
     }
 }
