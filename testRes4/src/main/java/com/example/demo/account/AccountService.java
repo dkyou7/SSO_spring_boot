@@ -28,7 +28,7 @@ public class AccountService implements UserDetailsService {
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .nickname(signUpForm.getNickname())
                 .remember(signUpForm.isRemember())
-                .gid("testRes3")
+                .gid("testRes4")
                 .build();
         account.updateVid("admin@naver.com");    // 글로벌 포탈을 vid로 가지도록
         accountRepository.save(account);

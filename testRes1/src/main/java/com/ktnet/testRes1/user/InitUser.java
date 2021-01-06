@@ -17,7 +17,7 @@ public class InitUser {
     private final InitUserService initUserService;
     @PostConstruct
     public void init(){
-        initUserService.init();   // 스프링 라이프 사이클로 인해 분리해주어야 한다.
+        // initUserService.init();   // 스프링 라이프 사이클로 인해 분리해주어야 한다.
         // @postConstruct 와 @Transaction
     }
     @Component
