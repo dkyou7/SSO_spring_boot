@@ -28,11 +28,11 @@
                 <tr th:each="user : ${federations}">
                     <td scope="row" th:text="${user.gid}">1</td>
                     <td scope="row" th:text="${user.uid}">1</td>
-                    <td scope="row"><a th:href="@{'/admin/mu/user/'+${user.uid}}" th:text="자세히">1</a></td>
+                    <td scope="row"><a th:href="@{'/admin/mf/federation/'+${user.uid}}" th:text="자세히">1</a></td>
                 </tr>
                 </tbody>
             </table>
-            <a class="btn btn-outline-primary" th:href="@{/admin/mu/sign-up}">유저 등록</a>
+<!--            <a class="btn btn-outline-primary" th:href="@{/admin/mu/sign-up}">유저 등록</a>-->
         </div>
         <!-- content end -->
     </div>

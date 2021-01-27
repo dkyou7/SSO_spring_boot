@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FederationRepository extends JpaRepository<Federation,Long> {
 
     Federation findByUidAndGid(String uid, String gid);
+
+    Federation findByUid(String uid);
 }

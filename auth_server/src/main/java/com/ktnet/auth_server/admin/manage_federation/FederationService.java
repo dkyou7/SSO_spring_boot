@@ -1,6 +1,7 @@
 package com.ktnet.auth_server.admin.manage_federation;
 
 import com.ktnet.auth_server.account.Account;
+import com.ktnet.auth_server.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,9 @@ public class FederationService {
 
     public List<Federation> findAll() {
        return federationRepository.findAll();
+    }
+
+    public Federation findByUid(String uid) {
+        return federationRepository.findByUid(uid);
     }
 }
