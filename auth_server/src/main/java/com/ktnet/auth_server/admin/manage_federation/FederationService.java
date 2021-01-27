@@ -1,10 +1,11 @@
-package com.ktnet.auth_server.federation;
+package com.ktnet.auth_server.admin.manage_federation;
 
 import com.ktnet.auth_server.account.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,5 +20,9 @@ public class FederationService {
             federation = federationRepository.save(Federation.builder().kid("testKid").gid(account.getGid()).uid(account.getUsername()).build());
         }
         return federation;
+    }
+
+    public List<Federation> findAll() {
+       return federationRepository.findAll();
     }
 }

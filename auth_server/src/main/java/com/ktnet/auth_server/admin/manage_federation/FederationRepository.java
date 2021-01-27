@@ -1,6 +1,5 @@
-package com.ktnet.auth_server.federation;
+package com.ktnet.auth_server.admin.manage_federation;
 
-import com.ktnet.auth_server.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FederationRepository extends JpaRepository<Federation,Long> {

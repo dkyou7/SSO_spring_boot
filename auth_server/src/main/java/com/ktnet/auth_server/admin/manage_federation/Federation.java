@@ -1,4 +1,4 @@
-package com.ktnet.auth_server.federation;
+package com.ktnet.auth_server.admin.manage_federation;
 
 import lombok.*;
 

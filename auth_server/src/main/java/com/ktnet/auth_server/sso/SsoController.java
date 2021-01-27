@@ -1,9 +1,8 @@
 package com.ktnet.auth_server.sso;
 
 import com.ktnet.auth_server.account.Account;
-import com.ktnet.auth_server.federation.Federation;
-import com.ktnet.auth_server.federation.FederationRepository;
-import com.ktnet.auth_server.federation.FederationService;
+import com.ktnet.auth_server.admin.manage_federation.Federation;
+import com.ktnet.auth_server.admin.manage_federation.FederationService;
 import com.ktnet.auth_server.logincheck.LoginCheckService;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;

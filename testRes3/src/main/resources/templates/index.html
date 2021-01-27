@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,6 +29,7 @@
     <p class="box alert alert-info mb-5" th:if="${message}" th:text="${message}"></p>
     <div class="box" th:if="${account != null}">
         <h2 class="text-muted mb-4" th:text="${account?.nickname}+'님, 안녕하세요!'"></h2>
+        <a sec:authorize="isAuthenticated()" th:href="@{/federation-mapping}" class="btn btn-lg btn-outline-primary mb-5">아이디 연결하기</a>
         <form th:action="@{/log-out}" method="post">
             <button type="submit" class="btn btn-info" style="width:auto;">log out</button>
         </form>

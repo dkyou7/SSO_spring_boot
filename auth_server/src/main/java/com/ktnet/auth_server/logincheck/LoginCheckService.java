@@ -1,6 +1,6 @@
 package com.ktnet.auth_server.logincheck;
 
-import com.ktnet.auth_server.federation.Federation;
+import com.ktnet.auth_server.admin.manage_federation.Federation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
