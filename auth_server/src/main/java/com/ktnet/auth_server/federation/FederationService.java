@@ -16,7 +16,7 @@ public class FederationService {
     public Federation findOrCreateNew(Account account){
         Federation federation = federationRepository.findByUidAndGid(account.getUsername(), account.getGid());
         if (federation == null){
-            federation = federationRepository.save(Federation.builder().gid(account.getGid()).uid(account.getUsername()).build());
+            federation = federationRepository.save(Federation.builder().kid("testKid").gid(account.getGid()).uid(account.getUsername()).build());
         }
         return federation;
     }

@@ -4,6 +4,7 @@ import com.ktnet.auth_server.account.Account;
 import com.ktnet.auth_server.federation.Federation;
 import com.ktnet.auth_server.federation.FederationRepository;
 import com.ktnet.auth_server.federation.FederationService;
+import com.ktnet.auth_server.logincheck.LoginCheckService;
 import com.ktnet.auth_server.user.User;
 import com.ktnet.auth_server.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class SsoController {
 
     private final UserService userService;
+
+    private final LoginCheckService loginCheckService;
 
     @GetMapping("/test")
     public String apiTest_get(String testMsg){
@@ -101,6 +104,7 @@ public class SsoController {
     @PostMapping("/signUp")
     public ResponseEntity<String> signUpSSO(@RequestBody Account account){
         Federation res = federationService.findOrCreateNew(account);
+        loginCheckService.save(res);
         log.info("create federation : {}", res.toString());
         return ResponseEntity.ok(res.toString());
     }
