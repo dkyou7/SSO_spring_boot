@@ -1,6 +1,7 @@
 package com.example.demo.sso;
 
 import com.example.demo.account.Account;
+import com.example.demo.account.AccountRepository;
 import com.example.demo.property.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Slf4j
@@ -17,6 +19,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class SsoService {
     private final AppProperties appProperties;
+    private final AccountRepository accountRepository;
 
     private final WebClient webClient = WebClient.builder()
             .baseUrl("http://localhost:8081/api/v1")
@@ -109,5 +112,24 @@ public class SsoService {
                 .bodyToMono(String.class)
                 .block();
         System.out.println("result: "+ result);
+    }
+
+    public void ssoSignUp(Long uid) {
+        Account byId = accountRepository.findById(uid).orElseThrow(EntityNotFoundException::new);
+
+        try{
+            String result = webClient
+                    .post()
+                    .uri("/signUp")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(byId)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            log.info(result);
+        }catch (Exception e){
+            log.info("ssoSignUp error" + e);
+        }
+
     }
 }

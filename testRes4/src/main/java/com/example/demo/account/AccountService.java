@@ -23,7 +23,7 @@ public class AccountService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final SsoService ssoService;
 
-    public void signUp(SignUpForm signUpForm) {
+    public Long signUp(SignUpForm signUpForm) {
         Account account = Account.builder().username(signUpForm.getUsername())
                 .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .nickname(signUpForm.getNickname())
@@ -31,7 +31,8 @@ public class AccountService implements UserDetailsService {
                 .gid("testRes4")
                 .build();
         account.updateVid("admin@naver.com");    // 글로벌 포탈을 vid로 가지도록
-        accountRepository.save(account);
+        Account save = accountRepository.save(account);
+        return save.getId();
     }
 
     @Override

@@ -38,7 +38,8 @@ public class AccountController {
             return "sign-up";
         }
         attributes.addFlashAttribute("message","회원가입 성공!");
-        accountService.signUp(signUpForm);
+        Long uid = accountService.signUp(signUpForm);
+        ssoService.ssoSignUp(uid);
         return "redirect:/";
     }
 

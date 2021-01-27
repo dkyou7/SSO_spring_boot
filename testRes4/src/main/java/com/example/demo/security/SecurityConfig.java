@@ -22,8 +22,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/","/log-in","/log-out","/go_login","/loginSuccess","/sign-up").permitAll()
-                .mvcMatchers("/api/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().ignoringAntMatchers("/h2-console/**")
+                .and().headers().frameOptions().sameOrigin();
 
         http.formLogin()
                 .loginPage("/log-in")
