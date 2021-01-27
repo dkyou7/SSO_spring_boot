@@ -2,9 +2,6 @@ package com.example.demo.account;
 
 import com.example.demo.sso.SsoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -43,8 +38,7 @@ public class AccountController {
             return "sign-up";
         }
         attributes.addFlashAttribute("message","회원가입 성공!");
-        Long uid = accountService.signUp(signUpForm);
-        ssoService.ssoSignUp(uid);
+        accountService.signUp(signUpForm);
         return "redirect:/";
     }
 
@@ -67,12 +61,12 @@ public class AccountController {
             model.addAttribute(account);
         }else{
             //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
-//            Account byVid = accountService.findByVid("admin@naver.com");
-//            boolean isSSO = ssoService.isSSO2("admin@naver.com");
-//            if(loginLogic(isSSO,byVid)){
-//                accountService.login(byVid);
-//                return "redirect:/";
-//            }
+            Account byVid = accountService.findByVid("admin@naver.com");
+            boolean isSSO = ssoService.isSSO2("admin@naver.com");
+            if(loginLogic(isSSO,byVid)){
+                accountService.login(byVid);
+                return "redirect:/";
+            }
         }
 
         return "index";

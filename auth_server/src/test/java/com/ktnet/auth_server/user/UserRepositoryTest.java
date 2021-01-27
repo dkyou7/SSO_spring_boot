@@ -23,13 +23,15 @@ class UserRepositoryTest {
     @Transactional
     @Commit
     public void insertNewUser() {
-//        User build = User.builder()
-//                .uid("dkyou7@naver.com")
-//                .password(passwordEncoder.encode("123"))
-//                .name("dkyou7")
-//                .roles(Collections.singletonList("ROLE_USER"))
-//                .isLogin("N")
-//                .build();
+        User build = User.builder()
+                .uid("dkyou7@naver.com")
+                .password(passwordEncoder.encode("123"))
+                .name("dkyou7")
+                .roles(Collections.singletonList("ROLE_USER"))
+                .isLogin("N")
+                .build();
+        userJpaRepo.save(build);
+
         User adminUser = User.builder()
                 .uid("admin@naver.com")
                 .password(passwordEncoder.encode("123"))
@@ -37,7 +39,6 @@ class UserRepositoryTest {
                 .roles(Collections.singletonList("ROLE_ADMIN"))
                 .isLogin("N")
                 .build();
-//        userJpaRepo.save(build);
         userJpaRepo.save(adminUser);
     }
 }

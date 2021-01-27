@@ -40,7 +40,7 @@ public class AccountService implements UserDetailsService {
         if(account == null){
             throw new UsernameNotFoundException(username);
         }
-        ssoService.ssoLogin(account);
+//        ssoService.ssoLogin(account);
         return new UserAccount(account);
     }
 

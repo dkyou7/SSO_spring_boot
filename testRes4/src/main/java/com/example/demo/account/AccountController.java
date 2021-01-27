@@ -57,16 +57,16 @@ public class AccountController {
     public String home(@CurrentUser Account account, Model model){
         if(account != null){
             // 인증된 유저 객체가 존재한다면, sso login 처리하기
-            ssoService.ssoLogin(account);
+//            ssoService.ssoLogin(account);
             model.addAttribute(account);
         }else{
             //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
-            Account byVid = accountService.findByVid("admin@naver.com");
-            boolean isSSO = ssoService.isSSO2("admin@naver.com");
-            if(loginLogic(isSSO,byVid)){
-                accountService.login(byVid);
-                return "redirect:/";
-            }
+//            Account byVid = accountService.findByVid("admin@naver.com");
+//            boolean isSSO = ssoService.isSSO2("admin@naver.com");
+//            if(loginLogic(isSSO,byVid)){
+//                accountService.login(byVid);
+//                return "redirect:/";
+//            }
         }
 
         return "index";

@@ -1,24 +1,20 @@
-package com.ktnet.auth_server.federation;
+package com.example.demo.sso;
 
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @ToString
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Federation {
+public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "federation_id")
+    @Column(name = "account_id")
     private Long id;
 
-    private String kid;
-
-    private String gid;
-
-    private String uid;
+    private String contents;
 }

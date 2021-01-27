@@ -1,6 +1,5 @@
 package com.example.demo.security;
 
-import com.example.demo.sso.SsoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -23,12 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/log-in","/log-out","/go_login","/loginSuccess","/sign-up").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/api/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().ignoringAntMatchers("/h2-console/**")
-                .and().headers().frameOptions().sameOrigin();
+                .antMatchers("/log-in","/log-out","/go_login","/loginSuccess","/sign-up").permitAll()
+                .mvcMatchers("/api/**").permitAll()
+                .anyRequest().authenticated();
 
         http.formLogin()
                 .loginPage("/log-in")

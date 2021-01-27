@@ -97,4 +97,11 @@ public class SsoController {
         log.info("create federation : {}", res.toString());
         return ResponseEntity.ok(res.toString());
     }
+
+    @PostMapping("/signUp")
+    public ResponseEntity<String> signUpSSO(@RequestBody Account account){
+        Federation res = federationService.findOrCreateNew(account);
+        log.info("create federation : {}", res.toString());
+        return ResponseEntity.ok(res.toString());
+    }
 }
