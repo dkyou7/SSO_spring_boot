@@ -30,4 +30,11 @@ public class FederationService {
     public Federation findByUid(String uid) {
         return federationRepository.findByUid(uid);
     }
+
+    @Transactional
+    public Federation updateKidByUid(String uid,String kid) {
+        Federation byUid = federationRepository.findByUid(uid);
+        byUid.updateKid(kid);
+        return byUid;
+    }
 }

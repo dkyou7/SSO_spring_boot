@@ -4,8 +4,11 @@ import com.ktnet.auth_server.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/mf")
@@ -29,14 +32,17 @@ public class FederationController {
     @GetMapping("/federation/{uid}")
     public String user_detail_by_userid(@PathVariable("uid") String uid, Model model){
         Federation byUid = federationService.findByUid(uid);
-        model.addAttribute("user",byUid);
+        model.addAttribute("federation",KidUpdateForm.toDto(byUid));
         return "admin/manage_federation/profile";
     }
 
-    @PostMapping("/setKid")
-    public String setKid(@ModelAttribute Federation federation, RedirectAttributes attributes){
+    @PostMapping("/federation/{uid}")
+    public String setKid(@PathVariable("uid") String uid, KidUpdateForm federation,
+                         RedirectAttributes attributes, Model model){
+        Federation byUid = federationService.updateKidByUid(uid,federation.getKid());   // uid 기반으로 kid 수정
+        model.addAttribute("federation",byUid);
+        attributes.addFlashAttribute("message","kid 수정 완료");
 
-
-        return "admin/manage_federation/profile";
+        return "redirect:/admin/mf/federation/"+uid;
     }
 }

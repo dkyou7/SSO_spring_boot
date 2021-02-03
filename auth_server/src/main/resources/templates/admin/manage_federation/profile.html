@@ -17,10 +17,10 @@
                 </button>
             </div>
             <div class="row">
-                <h2 class="col-sm-12" th:text="${user.uid} + '님의 계정관리 매뉴입니다.'">test</h2>
+                <h2 class="col-sm-12" th:text="${federation.uid} + '님의 계정관리 매뉴입니다.'">test</h2>
             </div>
             <div class="row mt-3">
-                <p>이메일 : <span th:text="${user.uid}"></span></p>
+                <p>이메일 : <span th:text="${federation.uid}"></span></p>
             </div>
             <div th:if="${newPW}" class="alert alert-info alert-dismissible fade show mt-3" role="alert">
                 <span th:text="${newPW}">메시지</span>
@@ -28,17 +28,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="needs-validation row mt-3" th:action="@{/admin/mf/setKid}" th:object="${user}" method="post" novalidate>
+            <form class="needs-validation row mt-3" th:action="@{'/admin/mf/federation/' + ${federation.uid}}" method="post" novalidate>
                 <div class="form-group">
                     <label for="kid">KID 등록</label>
-                    <input id="kid" type="text" th:field="*{kid}" class="form-control"
+                    <input id="kid" type="text" th:field="${federation.kid}" class="form-control"
                            aria-describedby="kidHelp" required minlength="3" maxlength="20">
                     <small id="kidHelp" class="form-text text-muted">
                         공백없이 문자와 숫자로만 3자 이상 20자 이내로 입력하세요.
                     </small>
                     <small class="invalid-feedback">KID을 입력하세요.</small>
-                    <small class="form-text text-danger" th:if="${#fields.hasErrors('kid')}" th:errors="*{kid}">Nickname Error</small>
-                    <button type="submit" th:href="@{/admin/mf/setKid}" class="btn btn-outline-primary mr-3">KID 등록</button>
+                    <small class="form-text text-danger" th:if="${#fields.hasErrors('${federation.kid}')}" th:errors="${federation.kid}">Nickname Error</small>
+                    <button type="submit" class="btn btn-outline-primary mr-3">KID 등록</button>
                 </div>
 
             </form>

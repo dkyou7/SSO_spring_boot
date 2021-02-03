@@ -21,4 +21,8 @@ public class Federation {
     private String gid;
 
     private String uid;
+
+    public void updateKid(String kid) {
+        this.kid = kid;
+    }
 }
