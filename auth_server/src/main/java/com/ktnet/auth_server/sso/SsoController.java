@@ -100,10 +100,15 @@ public class SsoController {
         return ResponseEntity.ok(res.toString());
     }
 
+    /**
+     * 회원 가입 요청이 들어오면, Federation, LoginCheck table을 구성한다.
+     * @param account
+     * @return
+     */
     @PostMapping("/signUp")
     public ResponseEntity<String> signUpSSO(@RequestBody Account account){
         Federation res = federationService.findOrCreateNew(account);
-        loginCheckService.save(res);
+        loginCheckService.save(res);    // federation 정보와, 로그인YN 결정 해주는 테이블 저장
         log.info("create federation : {}", res.toString());
         return ResponseEntity.ok(res.toString());
     }

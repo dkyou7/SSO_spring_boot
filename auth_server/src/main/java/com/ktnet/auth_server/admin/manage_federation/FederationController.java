@@ -45,4 +45,14 @@ public class FederationController {
 
         return "redirect:/admin/mf/federation/"+uid;
     }
+
+    @PostMapping("/federation/{uid}/disabled")
+    public String deleteMapping(@PathVariable("uid") String uid, KidUpdateForm federation,
+                                RedirectAttributes attributes, Model model){
+        Federation byUid = federationService.createKid(uid);// 걍 새로운 kid를 만들어주면 갱신된다.
+        model.addAttribute("federation",byUid);
+        attributes.addFlashAttribute("message","매핑 해제 완료");
+
+        return "redirect:/admin/mf/federation/"+uid;
+    }
 }

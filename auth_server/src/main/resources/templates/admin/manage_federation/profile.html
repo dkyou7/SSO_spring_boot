@@ -28,8 +28,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="needs-validation row mt-3" th:action="@{'/admin/mf/federation/' + ${federation.uid}}" method="post" novalidate>
-                <div class="form-group">
+            <div class="form-group">
+                <form class="needs-validation row mt-3" th:action="@{'/admin/mf/federation/' + ${federation.uid}}" method="post" novalidate>
                     <label for="kid">KID 등록</label>
                     <input id="kid" type="text" th:field="${federation.kid}" class="form-control"
                            aria-describedby="kidHelp" required minlength="3" maxlength="20">
@@ -39,10 +39,12 @@
                     <small class="invalid-feedback">KID을 입력하세요.</small>
                     <small class="form-text text-danger" th:if="${#fields.hasErrors('${federation.kid}')}" th:errors="${federation.kid}">Nickname Error</small>
                     <button type="submit" class="btn btn-outline-primary mr-3">KID 등록</button>
-                </div>
-
-            </form>
-            <div class="row">
+                </form>
+                <form class="needs-validation" th:action="@{'/admin/mf/federation/'+ ${federation.uid}+'/disabled'}" method="post">
+                    <button type="submit" class="btn btn-outline-danger mr-3">매핑 해제</button>
+                </form>
+            </div>
+            <div class="row mt-5">
                 <a th:href="@{/admin/mf/federations}" th:text="목록으로" class="btn btn-outline-primary"></a>
             </div>
         </div>

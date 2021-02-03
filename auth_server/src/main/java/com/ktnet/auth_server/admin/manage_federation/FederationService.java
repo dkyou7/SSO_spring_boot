@@ -1,12 +1,15 @@
 package com.ktnet.auth_server.admin.manage_federation;
 
 import com.ktnet.auth_server.account.Account;
+import com.ktnet.auth_server.logincheck.LoginCheck;
+import com.ktnet.auth_server.logincheck.LoginCheckService;
 import com.ktnet.auth_server.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -14,11 +17,12 @@ import java.util.List;
 public class FederationService {
     
     private final FederationRepository federationRepository;
+    private final LoginCheckService loginCheckService;
 
     public Federation findOrCreateNew(Account account){
         Federation federation = federationRepository.findByUidAndGid(account.getUsername(), account.getGid());
         if (federation == null){
-            federation = federationRepository.save(Federation.builder().kid("testKid").gid(account.getGid()).uid(account.getUsername()).build());
+            federation = federationRepository.save(Federation.builder().kid(UUID.randomUUID().toString()).gid(account.getGid()).uid(account.getUsername()).build());
         }
         return federation;
     }
@@ -31,10 +35,15 @@ public class FederationService {
         return federationRepository.findByUid(uid);
     }
 
-    @Transactional
     public Federation updateKidByUid(String uid,String kid) {
         Federation byUid = federationRepository.findByUid(uid);
         byUid.updateKid(kid);
+        return byUid;
+    }
+
+    public Federation createKid(String uid) {
+        Federation byUid = federationRepository.findByUid(uid);
+        byUid.updateKid(UUID.randomUUID().toString());
         return byUid;
     }
 }
