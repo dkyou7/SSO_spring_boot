@@ -27,7 +27,7 @@ public class SsoController {
 
     @GetMapping("/isSSO")
     public String isSSOTest(){
-        return ssoService.isSSO("admin@naver.com");
+        return ssoService.isSSO("testClient3");
     }
 
     @GetMapping("/isSSO2")

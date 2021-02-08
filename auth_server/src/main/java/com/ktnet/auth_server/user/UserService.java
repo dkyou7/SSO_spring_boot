@@ -75,9 +75,10 @@ public class UserService {
         user.logout();
     }
 
-    public void updateVidLogIn(User byUid) {
+    public User updateKidLogIn(User byUid) {
         User user = userRepository.findByUid(byUid.getUid());
         user.login();
+        return user;
     }
 
     public Set<Gid> getGids(String email) {

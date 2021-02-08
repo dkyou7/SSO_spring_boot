@@ -38,10 +38,10 @@ public class SsoService {
                 .bodyToMono(String.class)
                 .block();
     }
-    public String isSSO(String email){
+    public String isSSO(String sessionId){
         // WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
         String result = webClient.post().uri("/isSSO")
-                .bodyValue(email)
+                .bodyValue(sessionId)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -120,7 +120,6 @@ public class SsoService {
 
     public void ssoSignUp(Long uid) {
         Account byId = accountRepository.findById(uid).orElseThrow(EntityNotFoundException::new);
-
         try{
             String result = webClient
                     .post()
@@ -134,6 +133,18 @@ public class SsoService {
         }catch (Exception e){
             log.info("ssoSignUp error" + e);
         }
+    }
 
+    public void tokenCheck(String testClient3) {
+        try{
+            String result = webClient.post().uri("/tokenCheck")
+                    .bodyValue(testClient3)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            log.info(result);
+        }catch (Exception e){
+            log.info("tokenCheck error" + e);
+        }
     }
 }

@@ -16,10 +16,9 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
+    @Column(name = "uid")
     private String username;
     private String password;
     private String nickname;
-    private boolean remember;
-
     private String gid;
 }

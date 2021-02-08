@@ -67,6 +67,7 @@ public class AccountController {
             model.addAttribute(account);
         }else{
             //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
+            ssoService.tokenCheck("testClient3");
 //            Account byVid = accountService.findByVid("admin@naver.com");
 //            boolean isSSO = ssoService.isSSO2("admin@naver.com");
 //            if(loginLogic(isSSO,byVid)){
