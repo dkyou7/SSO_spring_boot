@@ -72,13 +72,13 @@ public class SsoService {
 
     /**
      * SSO 로그인 request
-     * 인증서버 VID에게 로그인 요청 전송
+     * 인증서버에게 로그인 요청 전송
      * @param account
      */
     public void ssoLogin(Account account) {
         //WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
         String result = webClient.post().uri("/login")
-                .bodyValue(account.getVid())
+                .bodyValue(account.getUsername())
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -135,7 +135,7 @@ public class SsoService {
         }
     }
 
-    public void tokenCheck(String testClient3) {
+    public String tokenCheck(String testClient3) {
         try{
             String result = webClient.post().uri("/tokenCheck")
                     .bodyValue(testClient3)
@@ -143,8 +143,10 @@ public class SsoService {
                     .bodyToMono(String.class)
                     .block();
             log.info(result);
+            return result;
         }catch (Exception e){
             log.info("tokenCheck error" + e);
         }
+        return null;
     }
 }

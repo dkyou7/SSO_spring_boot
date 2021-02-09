@@ -1,5 +1,6 @@
 package com.ktnet.auth_server.account;
 
+import com.ktnet.auth_server.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,8 +32,7 @@ public class AccountService {
         return save.getId();
     }
 
-    public Account findByVid(String s) {
-        return accountRepository.findByVid(s);
+    public Account findByUsername(String email) {
+        return accountRepository.findByUsername(email);
     }
-
 }

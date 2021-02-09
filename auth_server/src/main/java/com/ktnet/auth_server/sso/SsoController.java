@@ -70,12 +70,11 @@ public class SsoController {
     @PostMapping("/login")
     public String ssoLogin(@RequestBody String email){
         log.info(email);
-        User byUid = userService.findByUid(email);
-        Federation federation = federationService.findByUid(byUid.getUid());
+        Federation federation = federationService.findByUid(email);
         loginCheckService.login(federation.getKid());
 
         // 세션에 저장
-       sessionInfo.setSessionId("KID");
+        sessionInfo.setSessionId("KID");
         sessionInfo.setToken(federation.getKid());
         return "Y";
 //        if(!byUid.isLogin()){
@@ -127,9 +126,9 @@ public class SsoController {
      */
     @PostMapping("/signUp")
     public ResponseEntity<String> signUpSSO(@RequestBody Account account){
-        accountService.signUp(account);
-        Federation res = federationService.findOrCreateNew(account);
-        loginCheckService.save(res);    // federation 정보와, 로그인YN 결정 해주는 테이블 저장
+        accountService.signUp(account);     // 1. 계정 테이블에 저장
+        Federation res = federationService.findOrCreateNew(account);    // 2. federation 테이블에 저장.
+        loginCheckService.save(res);    // 3. federation 정보와, 로그인YN 결정 해주는 테이블 저장
         log.info("create federation : {}", res.toString());
         return ResponseEntity.ok(res.toString());
     }

@@ -63,11 +63,13 @@ public class AccountController {
     public String home(@CurrentUser Account account, Model model){
         if(account != null){
             // 인증된 유저 객체가 존재한다면, sso login 처리하기
-            ssoService.ssoLogin(account);
+            ssoService.ssoLogin(account);   // 5. sso 토큰 발급 요청
             model.addAttribute(account);
         }else{
-            //TODO : SSO 로직 실행 글로벌 포탈에게 싸인 보내기
-            ssoService.tokenCheck("testClient3");
+            String test = ssoService.tokenCheck("testClient3"); // 2. pmi-sso2
+            if (test == null){
+                return "redirect:/log-in";  // 3. 로그인 페이지
+            }
 //            Account byVid = accountService.findByVid("admin@naver.com");
 //            boolean isSSO = ssoService.isSSO2("admin@naver.com");
 //            if(loginLogic(isSSO,byVid)){
