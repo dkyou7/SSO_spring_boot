@@ -26,4 +26,9 @@ public class LoginCheckService {
         LoginCheck byKid = loginCheckRepository.findByKid(kid);
         byKid.setLogin(true);
     }
+
+    public void logout(String kid) {
+        LoginCheck byKid = loginCheckRepository.findByKid(kid);
+        byKid.setLogin(false);
+    }
 }

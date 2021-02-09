@@ -86,8 +86,7 @@ public class SsoController {
     @PostMapping("/logout")
     public String ssoLogout(@RequestBody String email){
         log.info(email);
-        User byUid = userService.findByUid(email);
-        userService.updateVidLogout(byUid);
+        federationService.logout(email);
         return "Y";
 //        if(byUid != null){
 //            userService.updateVidLogout(byUid);

@@ -46,4 +46,9 @@ public class FederationService {
         byUid.updateKid(UUID.randomUUID().toString());
         return byUid;
     }
+
+    public void logout(String email) {
+        Federation byUid = federationRepository.findByUid(email);
+        loginCheckService.logout(byUid.getKid());
+    }
 }

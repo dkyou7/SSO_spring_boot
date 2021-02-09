@@ -89,7 +89,7 @@ public class SsoService {
     public void ssoLogout(Account account) {
         //WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
         String result = webClient.post().uri("/logout")
-                .bodyValue(account.getVid())
+                .bodyValue(account.getUsername())
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

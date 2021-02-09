@@ -35,4 +35,8 @@ public class AccountService {
     public Account findByUsername(String email) {
         return accountRepository.findByUsername(email);
     }
+
+    public void logout(String email) {
+        Account byUsername = accountRepository.findByUsername(email);
+    }
 }
