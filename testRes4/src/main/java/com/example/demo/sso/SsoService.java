@@ -74,7 +74,7 @@ public class SsoService {
     public void ssoLogin(Account account) {
         //WebClient webClient = WebClient.builder().baseUrl(appProperties.getHost()).build();
         String result = webClient.post().uri("/login")
-                .bodyValue(account.getVid())
+                .bodyValue(account.getUsername())
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -131,5 +131,20 @@ public class SsoService {
             log.info("ssoSignUp error" + e);
         }
 
+    }
+
+    public String tokenCheck(String testClient3) {
+        try{
+            String result = webClient.post().uri("/tokenCheck")
+                    .bodyValue(testClient3)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            log.info(result);
+            return result;
+        }catch (Exception e){
+            log.info("tokenCheck error" + e);
+        }
+        return null;
     }
 }
