@@ -11,10 +11,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
@@ -36,6 +38,9 @@ public class SsoController {
 
     @Resource
     private SessionInfo sessionInfo;
+
+    @Autowired
+    ServletContext servletContext;
 
     @ApiOperation(value = "GET 접속 테스트", notes = "api가 잘 동작하는지 테스트 해본다.")
     @GetMapping("/test")
@@ -69,17 +74,14 @@ public class SsoController {
     }
     @ApiOperation(value = "로그인",notes = "federation DB 업데이트 이후 세션에 KID 저장")
     @PostMapping("/login")
-    public String ssoLogin(@RequestBody String email, HttpServletRequest request){
+    public String ssoLogin(@RequestBody String email){
         log.info(email);
         Federation federation = federationService.findByUid(email);
         loginCheckService.login(federation.getKid());
 
         // 세션에 저장
-        sessionInfo.setSessionId("KID");
-        sessionInfo.setToken(federation.getKid());
-        HttpSession session = request.getSession();
-        session.setAttribute("KID",federation.getKid());
-        log.info("KID 세션 생성 완료 : " + (String)session.getAttribute("KID"));
+        servletContext.setAttribute("KID",federation.getKid());
+        log.info("KID 세션 생성 완료 : " + (String)servletContext.getAttribute("KID"));
         return "Y";
 //        if(!byUid.isLogin()){
 //            userService.updateVidLogIn(byUid);
@@ -88,9 +90,10 @@ public class SsoController {
 //        return "N";
     }
     @PostMapping("/logout")
-    public String ssoLogout(@RequestBody String email){
-        log.info(email);
-        federationService.logout(email);
+    public String ssoLogout(){
+        String kid = (String) servletContext.getAttribute("KID");
+        loginCheckService.logout(kid);
+        servletContext.setAttribute("KID",null);
         return "Y";
 //        if(byUid != null){
 //            userService.updateVidLogout(byUid);
@@ -138,15 +141,16 @@ public class SsoController {
 
     @PostMapping("/tokenCheck")
     @ApiOperation(value = "토큰 조회", notes = "KID의 세션이 존재하는지 검사")
-    public String tokenChk(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        String kid = (String) session.getAttribute("KID");
-        String kid_session = sessionInfo.getToken();
-        log.info("kid -> " + kid);
-        log.info("kid session -> " + kid_session);
-        if(loginCheckService.isLogin(kid)){
-            return "Y";
-        }else{
+    public String tokenChk(){
+        try {
+            String kid = (String) servletContext.getAttribute("KID");
+            log.info("kid -> " + kid);
+            if(loginCheckService.isLogin(kid)){
+                return "Y";
+            }else{
+                return "N";
+            }
+        }catch (Exception e){
             return "N";
         }
     }

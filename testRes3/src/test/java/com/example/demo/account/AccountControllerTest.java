@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,6 +35,8 @@ class AccountControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
+
+
 
     @DisplayName("회원가입 처리 - 입력값 정상")
     @Test
@@ -123,8 +126,38 @@ class AccountControllerTest {
                 .expectBody(String.class).isEqualTo("Y");
 
         webTestClient.post().uri("http://localhost:8081/api/v1/tokenCheck")
+                .header("KID")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(String.class).isEqualTo("KID");
+                .expectBody(String.class).isEqualTo("Y");
+    }
+    @Test
+    @DisplayName("로그인 안된 상태로 요청하면, 실패합니다.")
+    public void test6() throws Exception{
+        String cur_time = String.valueOf(LocalDateTime.now());
+
+        mockMvc.perform(post("/sign-up")
+                .param("nickname","유동관")
+                .param("username",cur_time + "@naver.com")
+                .param("password","123")
+                .with(csrf()))  // CSRF 토큰 넣어주자. 안전한 요청으로 만들어주자.
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+        webTestClient.post().uri("http://localhost:8081/api/v1/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cur_time + "@naver.com")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("Y");
+        webTestClient.post().uri("http://localhost:8081/api/v1/logout")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("Y");
+
+        webTestClient.post().uri("http://localhost:8081/api/v1/tokenCheck")
+                .header("KID")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("N");
     }
 }
