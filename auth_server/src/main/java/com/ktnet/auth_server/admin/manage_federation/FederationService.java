@@ -23,6 +23,8 @@ public class FederationService {
         Federation federation = federationRepository.findByUidAndGid(account.getUsername(), account.getGid());
         if (federation == null){
             federation = federationRepository.save(Federation.builder().kid(UUID.randomUUID().toString()).gid(account.getGid()).uid(account.getUsername()).build());
+            // kid 가 같은 경우를 테스트해보자.
+//            federation = federationRepository.save(Federation.builder().kid("123").gid(account.getGid()).uid(account.getUsername()).build());
         }
         return federation;
     }

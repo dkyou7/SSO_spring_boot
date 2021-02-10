@@ -66,9 +66,9 @@ public class AccountController {
             ssoService.ssoLogin(account);   // 5. sso 토큰 발급 요청
             model.addAttribute(account);
         }else{
-            String test = ssoService.tokenCheck("testClient3"); // 2. pmi-sso2
-            if (test == null){
-                return "redirect:/log-in";  // 3. 로그인 페이지
+            String isSSO = ssoService.tokenCheck("testClient3"); // 2. pmi-sso2
+            if ("N".equals(isSSO)){
+                return "index";  // 3. 로그인 페이지
             }
 //            Account byVid = accountService.findByVid("admin@naver.com");
 //            boolean isSSO = ssoService.isSSO2("admin@naver.com");

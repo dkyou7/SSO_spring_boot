@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Api(tags = {"1. SSO"})
@@ -68,7 +69,7 @@ public class SsoController {
     }
     @ApiOperation(value = "로그인",notes = "federation DB 업데이트 이후 세션에 KID 저장")
     @PostMapping("/login")
-    public String ssoLogin(@RequestBody String email){
+    public String ssoLogin(@RequestBody String email, HttpServletRequest request){
         log.info(email);
         Federation federation = federationService.findByUid(email);
         loginCheckService.login(federation.getKid());
@@ -76,6 +77,9 @@ public class SsoController {
         // 세션에 저장
         sessionInfo.setSessionId("KID");
         sessionInfo.setToken(federation.getKid());
+        HttpSession session = request.getSession();
+        session.setAttribute("KID",federation.getKid());
+        log.info("KID 세션 생성 완료 : " + (String)session.getAttribute("KID"));
         return "Y";
 //        if(!byUid.isLogin()){
 //            userService.updateVidLogIn(byUid);
@@ -133,8 +137,17 @@ public class SsoController {
     }
 
     @PostMapping("/tokenCheck")
-    @ApiOperation(value = "토큰 조회", notes = "해당 클라이언트의 토큰이 유효한지 검사")
-    public ResponseEntity tokenChk(@RequestBody String sessionId, HttpServletRequest request){
-        return ResponseEntity.ok(sessionInfo.toString());
+    @ApiOperation(value = "토큰 조회", notes = "KID의 세션이 존재하는지 검사")
+    public String tokenChk(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String kid = (String) session.getAttribute("KID");
+        String kid_session = sessionInfo.getToken();
+        log.info("kid -> " + kid);
+        log.info("kid session -> " + kid_session);
+        if(loginCheckService.isLogin(kid)){
+            return "Y";
+        }else{
+            return "N";
+        }
     }
 }

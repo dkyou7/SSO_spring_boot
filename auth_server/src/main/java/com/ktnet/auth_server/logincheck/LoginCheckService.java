@@ -22,6 +22,11 @@ public class LoginCheckService {
         return byKid.isLogin();
     }
 
+    public boolean isLogin(String kid){
+        LoginCheck byKid = loginCheckRepository.findByKid(kid);
+        return byKid.isLogin();
+    }
+
     public void login(String kid) {
         LoginCheck byKid = loginCheckRepository.findByKid(kid);
         byKid.setLogin(true);
