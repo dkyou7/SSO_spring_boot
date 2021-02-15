@@ -160,7 +160,24 @@ public class SsoController {
     }
     @PostMapping("/mapping")
     @ApiOperation(value = "KID 매핑", notes = "서로 다른 두개의 아이디 매핑")
-    public String mappingKid(){
-        return "";
+    public String mappingKid(@RequestBody String uid){
+        String kid = (String) servletContext.getAttribute("KID");
+        log.info("SsoController::getUserInfo() KID -> " + kid);
+        federationService.mappingKid(kid,uid);
+        Federation byUid = federationService.findByUid(uid);
+        log.info("SsoController::mappingKid() byUid -> " + byUid);
+        return "Y";
+    }
+
+    @PostMapping("/ssoLoginByKid")
+    @ApiOperation(value = "KID 로그인", notes = "KID 세션를 이용한 로그인")
+    public String ssoLoginByKid(@RequestBody String gid){
+        String kid = (String) servletContext.getAttribute("KID");
+        log.info("SsoController::getUserInfo() KID -> " + kid);
+        if(kid == null){
+            return "N";
+        }
+        Federation byKidAndGid = federationService.findByKidAndGid(kid, gid);
+        return byKidAndGid.getUid();
     }
 }

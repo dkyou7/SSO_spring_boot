@@ -56,4 +56,8 @@ public class AccountService implements UserDetailsService {
                 List.of(new SimpleGrantedAuthority("ROLE_USER")));
         SecurityContextHolder.getContext().setAuthentication(token);
     }
+
+    public Account findByUid(String uid) {
+        return accountRepository.findByUsername(uid);
+    }
 }

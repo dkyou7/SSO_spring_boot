@@ -160,4 +160,39 @@ class AccountControllerTest {
                 .expectStatus().isOk()
                 .expectBody(String.class).isEqualTo("N");
     }
+    @Test
+    @DisplayName("test1 로그인 후, test2와 KID 매핑.")
+    public void test7() throws Exception{
+        String test1 = String.valueOf(LocalDateTime.now());
+        mockMvc.perform(post("/sign-up")
+                .param("nickname","매핑테스트1")
+                .param("username",test1 + "@naver.com")
+                .param("password","123")
+                .with(csrf()))  // CSRF 토큰 넣어주자. 안전한 요청으로 만들어주자.
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+        String test2 = String.valueOf(LocalDateTime.now());
+        mockMvc.perform(post("/sign-up")
+                .param("nickname","매핑테스트2")
+                .param("username",test2 + "@naver.com")
+                .param("password","123")
+                .with(csrf()))  // CSRF 토큰 넣어주자. 안전한 요청으로 만들어주자.
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+
+        webTestClient.post().uri("http://localhost:8081/api/v1/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(test1 + "@naver.com")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("Y");
+
+        webTestClient.post().uri("http://localhost:8081/api/v1/mapping")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(test2 + "@naver.com")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class).isEqualTo("Y");
+    }
+
 }

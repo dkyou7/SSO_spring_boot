@@ -149,4 +149,21 @@ public class SsoService {
         }
         return null;
     }
+    public String ssoLoginByKid(String testRes3) {
+        try{
+            String result = webClient.post().uri("/ssoLoginByKid")
+                    .bodyValue(testRes3)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            log.info(result);
+            if("N".equals(result)){
+                return "N";
+            }
+            return result;
+        }catch (Exception e){
+            log.info("tokenCheck error" + e);
+        }
+        return null;
+    }
 }

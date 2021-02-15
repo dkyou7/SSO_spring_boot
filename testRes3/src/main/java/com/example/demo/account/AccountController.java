@@ -70,14 +70,13 @@ public class AccountController {
             if ("N".equals(isSSO)){
                 return "index";  // 3. 로그인 페이지
             }
-//            Account byVid = accountService.findByVid("admin@naver.com");
-//            boolean isSSO = ssoService.isSSO2("admin@naver.com");
-//            if(loginLogic(isSSO,byVid)){
-//                accountService.login(byVid);
-//                return "redirect:/";
-//            }
+            String uid = ssoService.ssoLoginByKid("testRes3");
+            if(!"N".equals(uid)){
+                Account byUid = accountService.findByUid(uid);
+                ssoService.ssoLogin(byUid);
+                model.addAttribute(byUid);
+            }
         }
-
         return "index";
     }
 

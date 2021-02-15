@@ -25,4 +25,5 @@ public class Federation {
     public void updateKid(String kid) {
         this.kid = kid;
     }
+
 }

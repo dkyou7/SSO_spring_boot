@@ -1,6 +1,7 @@
 package com.ktnet.auth_server.admin.manage_federation;
 
 import com.ktnet.auth_server.account.Account;
+import com.ktnet.auth_server.account.AccountRepository;
 import com.ktnet.auth_server.logincheck.LoginCheck;
 import com.ktnet.auth_server.logincheck.LoginCheckService;
 import com.ktnet.auth_server.user.User;
@@ -18,6 +19,7 @@ public class FederationService {
     
     private final FederationRepository federationRepository;
     private final LoginCheckService loginCheckService;
+    private final AccountRepository accountRepository;
 
     public Federation findOrCreateNew(Account account){
         Federation federation = federationRepository.findByUidAndGid(account.getUsername(), account.getGid());
@@ -56,5 +58,14 @@ public class FederationService {
 
     public Federation findByKid(String kid) {
         return federationRepository.findByKid(kid);
+    }
+
+    public void mappingKid(String kid, String uid) {
+        Federation byUid = federationRepository.findByUid(uid);
+        byUid.updateKid(kid);
+    }
+
+    public Federation findByKidAndGid(String kid, String gid) {
+        return federationRepository.findByKidAndGid(kid,gid);
     }
 }

@@ -9,4 +9,6 @@ public interface FederationRepository extends JpaRepository<Federation,Long> {
     Federation findByUid(String uid);
 
     Federation findByKid(String kid);
+
+    Federation findByKidAndGid(String kid, String gid);
 }
