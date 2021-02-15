@@ -103,10 +103,14 @@ public class SsoController {
     }
 
     @PostMapping("/userInfo")
-    public User getUserInfo(@RequestBody String email){
-        log.info(email);
-        User byUid = userService.findByUid(email);
-        return byUid;
+    public Account getUserInfo(){
+        String kid = (String) servletContext.getAttribute("KID");
+        log.info("SsoController::getUserInfo() KID -> " + kid);
+        Federation byKid = federationService.findByKid(kid);
+        log.info("SsoController::getUserInfo() UID -> " + byKid.getUid());
+        Account byUsername = accountService.findByUsername(byKid.getUid());
+        log.info("SsoController::getUserInfo() byUsername -> " + byUsername);
+        return byUsername;
     }
 
     private final ArticleRepository articleRepository;
@@ -153,5 +157,10 @@ public class SsoController {
         }catch (Exception e){
             return "N";
         }
+    }
+    @PostMapping("/mapping")
+    @ApiOperation(value = "KID 매핑", notes = "서로 다른 두개의 아이디 매핑")
+    public String mappingKid(){
+        return "";
     }
 }

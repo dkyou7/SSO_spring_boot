@@ -53,4 +53,8 @@ public class FederationService {
         Federation byUid = federationRepository.findByUid(email);
         loginCheckService.logout(byUid.getKid());
     }
+
+    public Federation findByKid(String kid) {
+        return federationRepository.findByKid(kid);
+    }
 }
